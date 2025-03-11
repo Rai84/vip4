@@ -16,9 +16,20 @@
     <div class="flex-1 p-4 ml-74 max-w-6xl">
       <h1 id="txt_titulo" class="text-3xl font-semibold text-white mb-20">Lista de Usuários</h1>
 
-      <!-- Link para criar um novo usuário -->
-      <a href="#" th:href="@{/users/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Usuário</a>
+      <div class="flex gap-4">
+        <!-- Link para criar um novo usuário -->
+        <a href="#" th:href="@{/users/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Usuário</a>
 
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative">
+          <div class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 mb-4">
+            <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
+          </div>
+          <input type="text" id="table-search-users" class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Search for users" />
+        </div>
+      </div>
       <div class="overflow-x-auto bg-neutral-900 shadow-md rounded-lg">
         <table class="w-full text-left text-sm text-gray-500">
           <thead class="bg-neutral-900 text-xs text-gray-700 uppercase border-b border-neutral-800">
