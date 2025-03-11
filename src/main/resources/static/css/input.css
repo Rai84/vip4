@@ -1,0 +1,6 @@
+/* input.css */
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
+@import "tailwindcss";
+@import "flowbite";
