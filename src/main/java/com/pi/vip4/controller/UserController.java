@@ -81,4 +81,17 @@ public class UserController {
     userRepository.delete(user);
     return "redirect:/users"; // Redireciona para a lista
   }
+
+  // Alterna o status de um usuário (Ativar/Desativar)
+  @GetMapping("/toggle-status/{id}")
+  public String toggleUserStatus(@PathVariable("id") Long userId) throws Exception {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new Exception("Usuário não encontrado: " + userId));
+
+    // Inverte o status do usuário (se for "ativo", vira "inativo", e vice-versa)
+    user.setStatus(!user.isStatus());
+    userRepository.save(user);
+
+    return "redirect:/users"; // Redireciona para a lista de usuários
+  }
 }

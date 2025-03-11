@@ -3,56 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <title>Lista de Usuários</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-    <link rel="stylesheet" th:href="@{/css/reset.css}" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
-    
+  <body class="bg-stone-950 flex">
 
-    <h1 id="txt_titulo">Lista de Usuários</h1>
+    <!-- Menu Lateral -->
+    <div th:replace="fragments/menu :: aside" class="w-64 bg-gray-800 text-white h-screen"></div>
 
-    <!-- Link para criar um novo usuário -->
-    <a href="#" th:href="@{/users/new}">Criar Novo Usuário</a>
+    <!-- Conteúdo Principal -->
+    <div class="flex-1 p-4 ml-74 max-w-6xl">
+      <h1 id="txt_titulo" class="text-3xl font-semibold text-white mb-20">Lista de Usuários</h1>
 
-    <div>
-      <div>
-        <table border="1">
-          <thead>
+      <!-- Link para criar um novo usuário -->
+      <a href="#" th:href="@{/users/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Usuário</a>
+
+      <div class="overflow-x-auto bg-neutral-900 shadow-md rounded-lg">
+        <table class="w-full text-left text-sm text-gray-500">
+          <thead class="bg-neutral-900 text-xs text-gray-700 uppercase border-b border-neutral-800">
             <tr>
-              <th>ID</th>
-              <th>Nome</th>
-              <th>CPF</th>
-              <th>Email</th>
-              <th>Tipo</th>
-              <th>Status</th>
-              <th>Ações</th>
+              <th scope="col" class="px-6 py-3">ID</th>
+              <th scope="col" class="px-6 py-3">Nome</th>
+              <th scope="col" class="px-6 py-3">CPF</th>
+              <th scope="col" class="px-6 py-3">Email</th>
+              <th scope="col" class="px-6 py-3">Tipo</th>
+              <th scope="col" class="px-6 py-3">Status</th>
+              <th scope="col" class="px-6 py-3">Ações</th>
             </tr>
           </thead>
           <tbody>
             <!-- Loop para exibir cada usuário -->
-            <tr th:each="user : ${users}">
-              <td th:text="${user.id}"></td>
-              <td th:text="${user.nome}"></td>
-              <td th:text="${user.cpf}"></td>
-              <td th:text="${user.email}"></td>
-              <td th:text="${user.tipo}"></td>
-              <td
-                th:text="${user.status ? 'Ativo' : 'Inativo'}"></td>
-              <td>
-                <!-- Links para editar ou excluir -->
-                <a
-                  href="#"th:href="@{/users/edit/{id}(id=${user.id})}">Editar</a
-                >
-                <a
-                  href="#"th:href="@{/users/edit/{id}(id=${user.id})}">Ativar/Desativar</a
-                >
-                <a
-                  href="#"th:href="@{/users/delete/{id}(id=${user.id})}">Excluir</a
-                >
+            <tr th:each="user : ${users}" class="border-b border-neutral-900 hover:bg-neutral-700">
+              <td class="px-6 py-4" th:text="${user.id}"></td>
+              <td class="px-6 py-4" th:text="${user.nome}"></td>
+              <td class="px-6 py-4" th:text="${user.cpf}"></td>
+              <td class="px-6 py-4" th:text="${user.email}"></td>
+              <td class="px-6 py-4" th:text="${user.tipo}"></td>
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <div th:class="|me-2 h-2.5 w-2.5 rounded-full ${user.status ? 'bg-green-500' : 'bg-red-500'}|"></div>
+                  <span th:text="${user.status ? 'Ativo' : 'Inativo'}"></span>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <a href="#" th:href="@{/users/edit/{id}(id=${user.id})}" class="text-blue-600 hover:underline">Editar</a>
+                <span class="mx-2">|</span>
+                <a href="#" th:href="@{/users/toggle-status/{id}(id=${user.id})}" class="text-blue-600 hover:underline">Ativar/Desativar</a>
+                <span class="mx-2">|</span>
+                <a href="#" th:href="@{/users/delete/{id}(id=${user.id})}" class="text-red-600 hover:underline">Excluir</a>
               </td>
             </tr>
           </tbody>
