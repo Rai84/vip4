@@ -693,12 +693,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .mb-10 {
   margin-bottom: calc(var(--spacing) * 10);
 }
-.mb-16 {
-  margin-bottom: calc(var(--spacing) * 16);
-}
-.mb-18 {
-  margin-bottom: calc(var(--spacing) * 18);
-}
 .mb-20 {
   margin-bottom: calc(var(--spacing) * 20);
 }
@@ -723,17 +717,8 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .ml-6 {
   margin-left: calc(var(--spacing) * 6);
 }
-.ml-30 {
-  margin-left: calc(var(--spacing) * 30);
-}
 .ml-74 {
   margin-left: calc(var(--spacing) * 74);
-}
-.ml-80 {
-  margin-left: calc(var(--spacing) * 80);
-}
-.ml-300 {
-  margin-left: calc(var(--spacing) * 300);
 }
 .ml-auto {
   margin-left: auto;
@@ -1045,9 +1030,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .w-screen {
   width: 100vw;
 }
-.w-xl {
-  width: var(--container-xl);
-}
 .max-w-2xl {
   max-width: var(--container-2xl);
 }
@@ -1077,9 +1059,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .max-w-screen {
   max-width: 100vw;
-}
-.max-w-screen-lg {
-  max-width: var(--breakpoint-lg);
 }
 .max-w-screen-md {
   max-width: var(--breakpoint-md);
@@ -2040,9 +2019,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
   --tw-border-style: solid;
   border-style: solid;
 }
-.border-amber-300 {
-  border-color: var(--color-amber-300);
-}
 .border-blue-100 {
   border-color: var(--color-blue-100);
 }
@@ -2181,9 +2157,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .bg-\[var\(--my_variable\)\] {
   background-color: var(--my_variable);
 }
-.bg-amber-300 {
-  background-color: var(--color-amber-300);
-}
 .bg-blue-50 {
   background-color: var(--color-blue-50);
 }
@@ -2309,9 +2282,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .bg-neutral-900 {
   background-color: var(--color-neutral-900);
-}
-.bg-neutral-950 {
-  background-color: var(--color-neutral-950);
 }
 .bg-orange-50 {
   background-color: var(--color-orange-50);
@@ -4140,13 +4110,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
   &:hover {
     @media (hover: hover) {
       background-color: var(--color-blue-800);
-    }
-  }
-}
-.hover\:bg-gray-50 {
-  &:hover {
-    @media (hover: hover) {
-      background-color: var(--color-gray-50);
     }
   }
 }
