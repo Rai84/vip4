@@ -3502,6 +3502,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .text-yellow-500 {
   color: var(--color-yellow-500);
 }
+.text-yellow-600 {
+  color: var(--color-yellow-600);
+}
 .text-yellow-700 {
   color: var(--color-yellow-700);
 }
@@ -4151,6 +4154,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
   &:hover {
     @media (hover: hover) {
       background-color: var(--color-orange-500);
+    }
+  }
+}
+.hover\:bg-red-700 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-red-700);
     }
   }
 }

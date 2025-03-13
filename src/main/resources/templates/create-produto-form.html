@@ -17,7 +17,8 @@
             </a>
         </div>
 
-        <form action="#" th:action="@{/produtos/save}" method="post" class="space-y-4">
+        <!-- Adicionado enctype="multipart/form-data" para envio de arquivos -->
+        <form action="#" th:action="@{/produtos/save}" method="post" class="space-y-4" enctype="multipart/form-data">
             <div>
                 <label for="nomeProduto" class="block text-sm font-medium">Nome:</label>
                 <input type="text" id="nomeProduto" name="nomeProduto" required

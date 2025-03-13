@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pi.vip4.model.Produto;
 import com.pi.vip4.repository.ProdutoRepository;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -34,7 +36,7 @@ public class ProdutoController {
     return "create-produto-form"; // Formulário para criar produto
   }
 
-  // Salva um novo produto
+  // Salva um novo produto, incluindo a imagem
   @PostMapping("/save")
   public String createProduto(@Valid @ModelAttribute Produto produto, RedirectAttributes redirectAttributes) {
     produtoRepository.save(produto);
@@ -52,10 +54,10 @@ public class ProdutoController {
     return "edit-produto-form"; // Formulário para editar produto
   }
 
-  // Atualiza um produto existente
+  // Atualiza um produto existente, incluindo a imagem
   @PostMapping("/update/{id}")
   public String updateProduto(@PathVariable("id") Long produtoId, @Valid @ModelAttribute Produto produtoDetails,
-                              RedirectAttributes redirectAttributes) throws Exception {
+      RedirectAttributes redirectAttributes) throws Exception {
     Produto produto = produtoRepository.findById(produtoId)
         .orElseThrow(() -> new Exception("Produto não encontrado: " + produtoId));
 
@@ -74,19 +76,20 @@ public class ProdutoController {
 
   // Deleta um produto
   @GetMapping("/delete/{id}")
-  public String deleteProduto(@PathVariable("id") Long produtoId, RedirectAttributes redirectAttributes) throws Exception {
+  public String deleteProduto(@PathVariable("id") Long produtoId, RedirectAttributes redirectAttributes)
+      throws Exception {
     Produto produto = produtoRepository.findById(produtoId)
         .orElseThrow(() -> new Exception("Produto não encontrado: " + produtoId));
 
     produtoRepository.delete(produto);
-
     redirectAttributes.addFlashAttribute("message", "Produto deletado com sucesso!");
     return "redirect:/produtos"; // Redireciona para a lista
   }
 
   // Alterna o status de um produto (Ativar/Desativar)
   @GetMapping("/toggle-status/{id}")
-  public String toggleProdutoStatus(@PathVariable("id") Long produtoId, RedirectAttributes redirectAttributes) throws Exception {
+  public String toggleProdutoStatus(@PathVariable("id") Long produtoId, RedirectAttributes redirectAttributes)
+      throws Exception {
     Produto produto = produtoRepository.findById(produtoId)
         .orElseThrow(() -> new Exception("Produto não encontrado: " + produtoId));
 
