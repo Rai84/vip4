@@ -37,12 +37,6 @@
             </div>
 
             <div>
-                <label for="senha" class="block text-sm font-medium">Senha:</label>
-                <input type="password" id="senha" name="senha" required
-                       class="w-full p-2 bg-neutral-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500">
-            </div>
-
-            <div>
                 <label for="tipo" class="block text-sm font-medium">Tipo:</label>
                 <select id="tipo" name="tipo" required
                         class="w-full p-2 bg-neutral-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500">
@@ -51,10 +45,55 @@
                 </select>
             </div>
 
-            <button type="submit" 
-                    class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium">
+            <div>
+                <label for="senha" class="block text-sm font-medium">Senha:</label>
+                <input type="password" id="senha" name="senha" required
+               class="w-full p-2 bg-neutral-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label for="confirmaSenha" class="block text-sm font-medium">Confirme sua senha:</label>
+                <input type="password" id="confirmaSenha" name="confirmaSenha" required
+                       class="w-full p-2 bg-neutral-800 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Mensagem de erro -->
+            <p id="erroSenha" class="text-red-500 text-sm hidden">As senhas não coincidem. Tente novamente.</p>
+
+            <button type="submit" id="btnSubmit" 
+                    class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium"
+                    disabled>
                 Criar Usuário
             </button>
+
+            <script>
+                const formulario = document.getElementById("formulario");
+                const senha = document.getElementById("senha");
+                const confirmaSenha = document.getElementById("confirmaSenha");
+                const erroSenha = document.getElementById("erroSenha");
+                const btnSubmit = document.getElementById("btnSubmit");
+            
+                // Verifica as senhas sempre que o campo de confirmação é alterado
+                confirmaSenha.addEventListener("input", function() {
+                    if (senha.value !== confirmaSenha.value) {
+                        erroSenha.classList.remove("hidden"); // Exibe a mensagem de erro
+                        btnSubmit.disabled = true; // Desabilita o botão
+                    } else {
+                        erroSenha.classList.add("hidden"); // Esconde a mensagem de erro
+                        btnSubmit.disabled = false; // Habilita o botão
+                    }
+                });
+            
+                // Impede o envio do formulário caso as senhas não coincidam
+                formulario.addEventListener("submit", function(event) {
+                    if (senha.value !== confirmaSenha.value) {
+                        erroSenha.classList.remove("hidden"); // Exibe a mensagem de erro
+                        event.preventDefault(); // Impede o envio do formulário
+                    }
+                });
+            
+                        
+            </script>
         </form>
     </div>
 </body>
