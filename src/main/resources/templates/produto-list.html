@@ -13,14 +13,15 @@
     <div th:replace="fragments/menu :: aside" class="w-64 bg-gray-800 text-white h-screen"></div>
 
     <!-- Conteúdo Principal -->
-    <div class="flex-1 p-4 ml-74 max-w-6xl">
-      <h1 id="txt_titulo" class="text-3xl font-semibold text-white mb-20">Lista de Produtos</h1>
-
+    <div class="flex-1 p-4 ml-74 max-w-6xl mt-3">
+    
       <div class="flex gap-4">
+        <h1 id="txt_titulo" class="text-3xl font-semibold text-white mr-90">Lista de Produtos</h1>
         <!-- Link para criar um novo produto -->
         <a href="#" th:href="@{/produtos/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Produto</a>
 
         <label for="table-search" class="sr-only">Search</label>
+
         <div class="relative">
           <div class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 mb-4">
             <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

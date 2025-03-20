@@ -3,6 +3,8 @@ package com.pi.vip4.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.pi.vip4.validation.CPFValid;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -25,7 +27,7 @@ public class User {
 
   @NotNull
   @Column(name = "cpf", nullable = false, unique = true)
-  @Pattern(regexp = "\\d{11}", message = "CPF deve ter 11 dígitos")
+  @CPFValid
   private String cpf;
 
   @NotNull

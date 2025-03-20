@@ -22,42 +22,42 @@ public class UserController {
   @Autowired
   private PasswordEncoder passwordEncoder; // Injetando o PasswordEncoder
 
-  // Exibe a lista de usuários
+  
   @GetMapping
-  public String getAllUsers(Model model) {
+  public String getAllUsers(Model model) { // Exibe a lista de usuários
     List<User> users = userRepository.findAll();
     model.addAttribute("users", users);
     return "user-list"; // Nome do arquivo HTML em src/main/resources/templates/
   }
 
-  // Exibe formulário para adicionar novo usuário
+  
   @GetMapping("/new")
-  public String showCreateUserForm(Model model) {
+  public String showCreateUserForm(Model model) { // Exibe formulário para adicionar novo usuário
     model.addAttribute("user", new User()); // Cria um novo usuário vazio
     return "create-user-form"; // Formulário para criar usuário
   }
 
-  // Salva um novo usuário
+  
   @PostMapping("/save")
-  public String createUser(@Valid @ModelAttribute User user) {
+  public String createUser(@Valid @ModelAttribute User user) { // Salva um novo usuário
     // Criptografa a senha antes de salvar
     user.setSenha(passwordEncoder.encode(user.getSenha())); // Usando o passwordEncoder injetado
     userRepository.save(user);
     return "redirect:/users"; // Redireciona para a lista
   }
 
-  // Exibe formulário para editar um usuário existente
+  
   @GetMapping("/edit/{id}")
-  public String showUpdateUserForm(@PathVariable("id") Long userId, Model model) throws Exception {
+  public String showUpdateUserForm(@PathVariable("id") Long userId, Model model) throws Exception { // Exibe formulário para editar um usuário existente
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new Exception("Usuário não encontrado: " + userId));
     model.addAttribute("user", user);
     return "edit-user-form"; // Formulário para editar usuário
   }
 
-  // Atualiza um usuário existente
+  
   @PostMapping("/update/{id}")
-  public String updateUser(@PathVariable("id") Long userId, @Valid @ModelAttribute User userDetails)
+  public String updateUser(@PathVariable("id") Long userId, @Valid @ModelAttribute User userDetails) // Atualiza um usuário existente
       throws Exception {
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new Exception("Usuário não encontrado: " + userId));
@@ -72,9 +72,9 @@ public class UserController {
     return "redirect:/users"; // Redireciona para a lista
   }
 
-  // Deleta um usuário
+  
   @GetMapping("/delete/{id}")
-  public String deleteUser(@PathVariable("id") Long userId) throws Exception {
+  public String deleteUser(@PathVariable("id") Long userId) throws Exception { // Deleta um usuário
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new Exception("Usuário não encontrado: " + userId));
 
@@ -82,9 +82,9 @@ public class UserController {
     return "redirect:/users"; // Redireciona para a lista
   }
 
-  // Alterna o status de um usuário (Ativar/Desativar)
+  
   @GetMapping("/toggle-status/{id}")
-  public String toggleUserStatus(@PathVariable("id") Long userId) throws Exception {
+  public String toggleUserStatus(@PathVariable("id") Long userId) throws Exception { // Alterna o status de um usuário (Ativar/Desativar)
     User user = userRepository.findById(userId)
         .orElseThrow(() -> new Exception("Usuário não encontrado: " + userId));
 
