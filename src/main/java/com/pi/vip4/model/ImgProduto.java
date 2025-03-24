@@ -3,27 +3,27 @@ package com.pi.vip4.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "img_produto")
+@Table(name = "imagens_produto")
 public class ImgProduto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idImagem;
+    private Long idImgProduto;
 
     @ManyToOne
-    @JoinColumn(name = "id_produto", nullable = false)
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
-    @Column(name = "imagem_url", nullable = false)
+    @Column(name = "imagemUrl")
     private String imagemUrl;
 
     // Getters and Setters
-    public Long getIdImagem() {
-        return idImagem;
+    public Long getIdImgProduto() {
+        return idImgProduto;
     }
 
-    public void setIdImagem(Long idImagem) {
-        this.idImagem = idImagem;
+    public void setIdImgProduto(Long idImgProduto) {
+        this.idImgProduto = idImgProduto;
     }
 
     public Produto getProduto() {
@@ -45,8 +45,8 @@ public class ImgProduto {
     @Override
     public String toString() {
         return "ImgProduto{" +
-                "idImagem=" + idImagem +
-                ", produto=" + produto.getIdProduto() +
+                "idImgProduto=" + idImgProduto +
+                ", produto=" + produto +
                 ", imagemUrl='" + imagemUrl + '\'' +
                 '}';
     }

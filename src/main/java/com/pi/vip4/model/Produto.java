@@ -5,6 +5,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "produtos")
@@ -39,6 +40,10 @@ public class Produto {
 
     @Column(name = "status", nullable = false)
     private boolean status; // Ativo ou inativo
+
+    // Relacionamento com a tabela de imagens
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<ImgProduto> imagens;
 
     // Getters and Setters
     public Long getIdProduto() {
@@ -97,6 +102,14 @@ public class Produto {
         this.status = status;
     }
 
+    public List<ImgProduto> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(List<ImgProduto> imagens) {
+        this.imagens = imagens;
+    }
+
     @Override
     public String toString() {
         return "Produto{" +
@@ -107,6 +120,7 @@ public class Produto {
                 ", descricao='" + descricao + '\'' +
                 ", avaliacao=" + avaliacao +
                 ", status=" + status +
+                ", imagens=" + imagens +
                 '}';
     }
 }
