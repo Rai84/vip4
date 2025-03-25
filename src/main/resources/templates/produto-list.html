@@ -16,7 +16,7 @@
     <div class="flex-1 p-4 ml-74 max-w-6xl mt-3">
     
       <div class="flex gap-4">
-        <h1 id="txt_titulo" class="text-3xl font-semibold text-white mr-90">Lista de Produtos</h1>
+        <h1 id="txt_titulo" class="text-3xl font-semibold text-white mr-44">Lista de Produtos</h1>
         <!-- Link para criar um novo produto -->
         <a href="#" th:href="@{/produtos/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Produto</a>
 
@@ -29,6 +29,20 @@
             </svg>
           </div>
           <input type="text" id="table-search-products" class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Search for products" />
+        </div>
+
+        <div class="flex items-center gap-2.5 w-40 mb-4">
+          <a th:if="${produtosPage.hasPrevious()}" th:href="@{/produtos(page=${produtosPage.number - 1})}"
+          class="">
+            <i class="bi bi-arrow-left-circle text-white"></i>
+          </a>
+    
+          <span class="mx-2.5 text-white">Página <span th:text="${produtosPage.number + 1}"></span> de <span th:text="${produtosPage.totalPages}"></span></span>
+
+          <a th:if="${produtosPage.hasNext()}" th:href="@{/produtos(page=${produtosPage.number + 1})}"
+          class="">
+            <i class="bi bi-arrow-right-circle text-white"></i>
+          </a>
         </div>
       </div>
 
@@ -76,5 +90,7 @@
         </table>
       </div>
     </div>
+    
+
   </body>
 </html>

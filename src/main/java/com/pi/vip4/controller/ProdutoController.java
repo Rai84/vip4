@@ -2,6 +2,8 @@ package com.pi.vip4.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.pi.vip4.model.ImgProduto;
 import com.pi.vip4.model.Produto;
@@ -53,11 +58,15 @@ public class ProdutoController {
     return "/uploads/" + nomeArquivo;
   }
 
-  @GetMapping // Exibe a lista de produtos
-  public String getAllProdutos(Model model) {
-    List<Produto> produtos = produtoRepository.findAll();
-    model.addAttribute("produtos", produtos);
-    return "produto-list"; // Nome do arquivo HTML em src/main/resources/templates/
+  @GetMapping
+  public String getAllProdutos(Model model, @RequestParam(defaultValue = "0") int page) {
+    Pageable pageable = PageRequest.of(page, 10); // 10 produtos por página
+    Page<Produto> produtosPage = produtoRepository.findAll(pageable);
+
+    model.addAttribute("produtos", produtosPage.getContent()); // Envia a lista de produtos
+    model.addAttribute("produtosPage", produtosPage); // Para paginação
+
+    return "produto-list";
   }
 
   @GetMapping("/new") // Exibe formulário para adicionar novo produto
