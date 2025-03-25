@@ -40,6 +40,7 @@
               <th scope="col" class="px-6 py-3">Nome</th>
               <th scope="col" class="px-6 py-3">Preço</th>
               <th scope="col" class="px-6 py-3">Estoque</th>
+              <th scope="col" class="px-6 py-3">Descrição</th>
               <th scope="col" class="px-6 py-3">Avaliação</th>
               <th scope="col" class="px-6 py-3">Status</th>
               <th scope="col" class="px-6 py-3">Ações</th>
@@ -52,6 +53,7 @@
               <td class="px-6 py-4" th:text="${produto.nomeProduto}"></td>
               <td class="px-6 py-4" th:text="${produto.preco}"></td>
               <td class="px-6 py-4" th:text="${produto.estoque}"></td>
+              <td class="px-6 py-4" th:text="${produto.descricao}"></td>
               <td class="px-6 py-4" th:text="${produto.avaliacao}"></td>
               <td class="px-6 py-4">
                 <div class="flex items-center">
@@ -62,8 +64,11 @@
               <td class="px-6 py-4">
                 <a href="#" th:href="@{/produtos/edit/{id}(id=${produto.idProduto})}" class="text-blue-600 hover:underline">Editar</a>
                 <span class="mx-2">|</span>
-                <a href="#" th:href="@{/produtos/toggle-status/{id}(id=${produto.idProduto})}" class="text-blue-600 hover:underline">Ativar/Desativar</a>
+                <a href="#" th:href="@{/produtos/toggle-status/{id}(id=${produto.idProduto})}" class="text-blue-600 hover:underline" onclick="return confirmAction()">Ativar/Desativar</a>
                 <span class="mx-2">|</span>
+
+                <script th:src="@{/js/alerts2.js}"></script>
+
                 <a href="#" th:href="@{/produtos/delete/{id}(id=${produto.idProduto})}" class="text-red-600 hover:underline">Excluir</a>
               </td>
             </tr>

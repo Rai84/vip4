@@ -188,7 +188,7 @@ public class ProdutoController {
 
     return "redirect:/produtos/edit/" + imgProduto.getProduto().getIdProduto();
   }
-
+  
   @GetMapping("/toggle-status/{id}") // Alterna o status de um produto (Ativar/Desativar)
   public String toggleProdutoStatus(@PathVariable("id") Long produtoId, RedirectAttributes redirectAttributes)
       throws Exception {
