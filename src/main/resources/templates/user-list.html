@@ -17,7 +17,7 @@
       
 
       <div class="flex gap-4">
-        <h1 id="txt_titulo" class="text-3xl font-semibold text-white mr-93">Lista de Usuários</h1>
+        <h1 id="txt_titulo" class="text-3xl font-semibold text-white mr-44">Lista de Usuários</h1>
         <!-- Link para criar um novo usuário -->
         <a href="#" th:href="@{/users/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Usuário</a>
 
@@ -31,7 +31,23 @@
           </div>
           <input type="text" id="table-search-users" class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Search for users" />
         </div>
+
+        <div class="flex items-center gap-2.5 w-40 mb-4">
+          <a th:if="${usersPage.hasPrevious()}" th:href="@{/users(page=${usersPage.number - 1})}"
+          class="">
+            <i class="bi bi-arrow-left-circle text-white"></i>
+          </a>
+    
+          <span class="mx-2.5 text-white">Página <span th:text="${usersPage.number + 1}"></span> de <span th:text="${usersPage.totalPages}"></span></span>
+
+          <a th:if="${usersPage.hasNext()}" th:href="@{/users(page=${usersPage.number + 1})}"
+          class="">
+            <i class="bi bi-arrow-right-circle text-white"></i>
+          </a>
+        </div>
+
       </div>
+      
       <div class="overflow-x-auto bg-neutral-900 shadow-md rounded-lg">
         <table class="w-full text-left text-sm text-gray-500">
           <thead class="bg-neutral-900 text-xs text-gray-700 uppercase border-b border-neutral-800">

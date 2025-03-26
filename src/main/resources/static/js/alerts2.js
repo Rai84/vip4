@@ -1,8 +1,10 @@
-function confirmAction() {
+function confirmAction(event, url) {
     const resposta = confirm("Você tem certeza que deseja ativar/desativar este produto?");
     if (resposta) {
-        return true; // Redireciona para o link
+        window.location.href = url;  // Redireciona para o link após confirmação
+        return true;
     } else {
-        return false; // Cancela a ação
+        event.preventDefault();  // Cancela a ação se o usuário clicar em "Cancelar"
+        return false;
     }
 }

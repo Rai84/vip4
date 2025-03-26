@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "produtos")
@@ -108,6 +109,15 @@ public class Produto {
 
     public void setImagens(List<ImgProduto> imagens) {
         this.imagens = imagens;
+    }
+
+    public List<String> getImgUrls() {
+        if (imagens == null) {
+            return List.of(); // Retorna uma lista vazia para evitar NullPointerException
+        }
+        return imagens.stream()
+                .map(ImgProduto::getImagemUrl)
+                .collect(Collectors.toList());
     }
 
     @Override

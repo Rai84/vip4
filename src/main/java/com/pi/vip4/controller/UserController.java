@@ -1,11 +1,13 @@
 package com.pi.vip4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Pageable;
 import com.pi.vip4.model.User;
 import com.pi.vip4.repository.UserRepository;
 
@@ -24,11 +26,16 @@ public class UserController {
 
   
   @GetMapping
-  public String getAllUsers(Model model) { // Exibe a lista de usuários
-    List<User> users = userRepository.findAll();
-    model.addAttribute("users", users);
+    public String getAllUsers(Model model, @RequestParam(defaultValue = "0") int page) {
+    Pageable pageable = PageRequest.of(page, 10); // 10 usuários por página
+    Page<User> usersPage = userRepository.findAll(pageable);
+    
+    model.addAttribute("users", usersPage.getContent()); // Lista de usuários para o template
+    model.addAttribute("usersPage", usersPage); // Para controle de paginação
+    
     return "user-list"; // Nome do arquivo HTML em src/main/resources/templates/
   }
+
 
   
   @GetMapping("/new")
