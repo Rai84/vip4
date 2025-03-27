@@ -964,6 +964,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .h-96 {
   height: calc(var(--spacing) * 96);
 }
+.h-\[35rem\] {
+  height: 35rem;
+}
 .h-\[calc\(100\%-1rem\)\] {
   height: calc(100% - 1rem);
 }
@@ -1089,6 +1092,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .w-96 {
   width: calc(var(--spacing) * 96);
+}
+.w-\[70rem\] {
+  width: 70rem;
 }
 .w-\[600px\] {
   width: 600px;
@@ -1269,6 +1275,10 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .-translate-y-1 {
   --tw-translate-y: calc(var(--spacing) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+.-translate-y-1\/2 {
+  --tw-translate-y: calc(calc(1/2 * 100%) * -1);
   translate: var(--tw-translate-x) var(--tw-translate-y);
 }
 .-translate-y-3 {
@@ -4269,6 +4279,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     color: var(--color-gray-400);
   }
 }
+.hover\:cursor-pointer {
+  &:hover {
+    @media (hover: hover) {
+      cursor: pointer;
+    }
+  }
+}
 .hover\:border-gray-300 {
   &:hover {
     @media (hover: hover) {
@@ -4544,6 +4561,11 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .md\:flex {
   @media (width >= 48rem) {
     display: flex;
+  }
+}
+.md\:w-96 {
+  @media (width >= 48rem) {
+    width: calc(var(--spacing) * 96);
   }
 }
 .md\:w-auto {

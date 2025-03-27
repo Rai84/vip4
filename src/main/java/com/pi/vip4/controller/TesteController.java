@@ -11,7 +11,7 @@ import com.pi.vip4.repository.ProdutoRepository;
 import java.util.List;
 
 @Controller
-public class Teste {
+public class TesteController {
 
     @Autowired
     private ProdutoRepository produtoRepository;

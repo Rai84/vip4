@@ -24,6 +24,7 @@ import com.pi.vip4.model.ImgProduto;
 import com.pi.vip4.model.Produto;
 import com.pi.vip4.repository.ProdutoRepository;
 import com.pi.vip4.repository.ImgProdutoRepository;
+import com.pi.vip4.service.ProdutoService;
 
 import javax.validation.Valid;
 
@@ -36,6 +37,9 @@ public class ProdutoController {
 
   @Autowired
   private ImgProdutoRepository imgProdutoRepository;
+
+  @Autowired
+  private ProdutoService produtoService;
 
    // Salva a imagem no diretório e retorna a URL
   private String salvarImagem(MultipartFile imagem, Long idProduto) throws IOException {
@@ -67,6 +71,13 @@ public class ProdutoController {
     model.addAttribute("produtosPage", produtosPage); // Para paginação
 
     return "produto-list";
+  }
+
+  @GetMapping("/{idProduto}")
+  public String getProduto(@PathVariable Long idProduto, Model model) {
+    Produto produto = produtoService.buscarPorId(idProduto); // Serviço que busca o produto
+    model.addAttribute("produto", produto);
+    return "produto-detalhes"; // Nome do template que exibe o produto
   }
 
   @GetMapping("/new") // Exibe formulário para adicionar novo produto
