@@ -198,6 +198,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .inset-0 {
   inset: calc(var(--spacing) * 0);
 }
+.inset-x-0 {
+  inset-inline: calc(var(--spacing) * 0);
+}
 .inset-y-0 {
   inset-block: calc(var(--spacing) * 0);
 }
@@ -255,6 +258,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .top-1 {
   top: calc(var(--spacing) * 1);
 }
+.top-1\/2 {
+  top: calc(1/2 * 100%);
+}
 .top-2 {
   top: calc(var(--spacing) * 2);
 }
@@ -270,8 +276,17 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .top-6 {
   top: calc(var(--spacing) * 6);
 }
+.top-24 {
+  top: calc(var(--spacing) * 24);
+}
 .top-28 {
   top: calc(var(--spacing) * 28);
+}
+.top-96 {
+  top: calc(var(--spacing) * 96);
+}
+.top-\[-10px\] {
+  top: -10px;
 }
 .right-0 {
   right: calc(var(--spacing) * 0);
@@ -290,6 +305,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .right-24 {
   right: calc(var(--spacing) * 24);
+}
+.right-\[-10px\] {
+  right: -10px;
 }
 .right-auto {
   right: auto;
@@ -329,6 +347,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .left-1 {
   left: calc(var(--spacing) * 1);
+}
+.left-2 {
+  left: calc(var(--spacing) * 2);
 }
 .left-5 {
   left: calc(var(--spacing) * 5);
@@ -399,8 +420,14 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .col-span-full {
   grid-column: 1 / -1;
 }
+.col-start-2 {
+  grid-column-start: 2;
+}
 .col-start-auto {
   grid-column-start: auto;
+}
+.col-end-3 {
+  grid-column-end: 3;
 }
 .col-end-auto {
   grid-column-end: auto;
@@ -411,8 +438,35 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .row-span-full {
   grid-row: 1 / -1;
 }
+.row-start-2 {
+  grid-row-start: 2;
+}
+.row-start-3 {
+  grid-row-start: 3;
+}
+.row-start-4 {
+  grid-row-start: 4;
+}
+.row-start-5 {
+  grid-row-start: 5;
+}
+.row-start-6 {
+  grid-row-start: 6;
+}
+.row-start-7 {
+  grid-row-start: 7;
+}
+.row-start-8 {
+  grid-row-start: 8;
+}
+.row-start-9 {
+  grid-row-start: 9;
+}
 .row-start-auto {
   grid-row-start: auto;
+}
+.row-end-3 {
+  grid-row-end: 3;
 }
 .row-end-auto {
   grid-row-end: auto;
@@ -504,8 +558,14 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .mx-1 {
   margin-inline: calc(var(--spacing) * 1);
 }
+.mx-1\.5 {
+  margin-inline: calc(var(--spacing) * 1.5);
+}
 .mx-2 {
   margin-inline: calc(var(--spacing) * 2);
+}
+.mx-2\.5 {
+  margin-inline: calc(var(--spacing) * 2.5);
 }
 .mx-4 {
   margin-inline: calc(var(--spacing) * 4);
@@ -609,6 +669,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .mt-2 {
   margin-top: calc(var(--spacing) * 2);
 }
+.mt-2\.5 {
+  margin-top: calc(var(--spacing) * 2.5);
+}
 .mt-3 {
   margin-top: calc(var(--spacing) * 3);
 }
@@ -648,17 +711,17 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .mr-3 {
   margin-right: calc(var(--spacing) * 3);
 }
+.mr-3\.5 {
+  margin-right: calc(var(--spacing) * 3.5);
+}
 .mr-5 {
   margin-right: calc(var(--spacing) * 5);
 }
 .mr-8 {
   margin-right: calc(var(--spacing) * 8);
 }
-.mr-90 {
-  margin-right: calc(var(--spacing) * 90);
-}
-.mr-93 {
-  margin-right: calc(var(--spacing) * 93);
+.mr-44 {
+  margin-right: calc(var(--spacing) * 44);
 }
 .mr-auto {
   margin-right: auto;
@@ -719,6 +782,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .ml-6 {
   margin-left: calc(var(--spacing) * 6);
+}
+.ml-72 {
+  margin-left: calc(var(--spacing) * 72);
 }
 .ml-74 {
   margin-left: calc(var(--spacing) * 74);
@@ -1023,6 +1089,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .w-96 {
   width: calc(var(--spacing) * 96);
+}
+.w-\[600px\] {
+  width: 600px;
 }
 .w-auto {
   width: auto;
@@ -1422,11 +1491,23 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .grid-cols-10 {
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
+.grid-cols-\[10rem_1fr\] {
+  grid-template-columns: 10rem 1fr;
+}
+.grid-cols-\[50px_1fr_50px\] {
+  grid-template-columns: 50px 1fr 50px;
+}
 .grid-cols-none {
   grid-template-columns: none;
 }
 .grid-cols-subgrid {
   grid-template-columns: subgrid;
+}
+.grid-rows-\[30px_1fr_30px\] {
+  grid-template-rows: 30px 1fr 30px;
+}
+.grid-rows-\[repeat\(9\,55px\)\] {
+  grid-template-rows: repeat(9,55px);
 }
 .grid-rows-none {
   grid-template-rows: none;
@@ -1584,8 +1665,14 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .gap-2 {
   gap: calc(var(--spacing) * 2);
 }
+.gap-2\.5 {
+  gap: calc(var(--spacing) * 2.5);
+}
 .gap-3 {
   gap: calc(var(--spacing) * 3);
+}
+.gap-3\.5 {
+  gap: calc(var(--spacing) * 3.5);
 }
 .gap-4 {
   gap: calc(var(--spacing) * 4);
@@ -1651,6 +1738,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .gap-x-16 {
   column-gap: calc(var(--spacing) * 16);
 }
+.gap-x-\[25rem\] {
+  column-gap: 25rem;
+}
 .space-x-0 {
   :where(& > :not(:last-child)) {
     --tw-space-x-reverse: 0;
@@ -1679,6 +1769,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .gap-y-3 {
   row-gap: calc(var(--spacing) * 3);
+}
+.gap-y-\[1rem\] {
+  row-gap: 1rem;
 }
 .divide-x {
   :where(& > :not(:last-child)) {
@@ -2172,6 +2265,12 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .bg-\[var\(--my_variable\)\] {
   background-color: var(--my_variable);
+}
+.bg-amber-300 {
+  background-color: var(--color-amber-300);
+}
+.bg-black {
+  background-color: var(--color-black);
 }
 .bg-blue-50 {
   background-color: var(--color-blue-50);
@@ -2888,6 +2987,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .px-2 {
   padding-inline: calc(var(--spacing) * 2);
 }
+.px-2\.5 {
+  padding-inline: calc(var(--spacing) * 2.5);
+}
 .px-3 {
   padding-inline: calc(var(--spacing) * 3);
 }
@@ -2908,6 +3010,9 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 }
 .py-0 {
   padding-block: calc(var(--spacing) * 0);
+}
+.py-0\.5 {
+  padding-block: calc(var(--spacing) * 0.5);
 }
 .py-1 {
   padding-block: calc(var(--spacing) * 1);
@@ -3205,6 +3310,12 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .text-xs {
   font-size: var(--text-xs);
   line-height: var(--tw-leading, var(--text-xs--line-height));
+}
+.text-\[12px\] {
+  font-size: 12px;
+}
+.text-\[28px\] {
+  font-size: 28px;
 }
 .leading-1 {
   --tw-leading: calc(var(--spacing) * 1);
@@ -4193,6 +4304,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     }
   }
 }
+.hover\:bg-green-700 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-green-700);
+    }
+  }
+}
 .hover\:bg-neutral-700 {
   &:hover {
     @media (hover: hover) {
@@ -4204,6 +4322,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
   &:hover {
     @media (hover: hover) {
       background-color: var(--color-orange-500);
+    }
+  }
+}
+.hover\:bg-red-700 {
+  &:hover {
+    @media (hover: hover) {
+      background-color: var(--color-red-700);
     }
   }
 }
@@ -4221,6 +4346,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     }
   }
 }
+.hover\:text-blue-700 {
+  &:hover {
+    @media (hover: hover) {
+      color: var(--color-blue-700);
+    }
+  }
+}
 .hover\:text-gray-600 {
   &:hover {
     @media (hover: hover) {
@@ -4232,6 +4364,13 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
   &:hover {
     @media (hover: hover) {
       color: var(--color-gray-900);
+    }
+  }
+}
+.hover\:text-green-700 {
+  &:hover {
+    @media (hover: hover) {
+      color: var(--color-green-700);
     }
   }
 }
@@ -4335,9 +4474,19 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     outline-color: var(--color-indigo-600);
   }
 }
+.sm\:mx-6 {
+  @media (width >= 40rem) {
+    margin-inline: calc(var(--spacing) * 6);
+  }
+}
 .sm\:mx-auto {
   @media (width >= 40rem) {
     margin-inline: auto;
+  }
+}
+.sm\:h-7 {
+  @media (width >= 40rem) {
+    height: calc(var(--spacing) * 7);
   }
 }
 .sm\:w-full {
@@ -4356,15 +4505,96 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
 }
+.sm\:grid-cols-2 {
+  @media (width >= 40rem) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 .sm\:text-sm\/6 {
   @media (width >= 40rem) {
     font-size: var(--text-sm);
     line-height: calc(var(--spacing) * 6);
   }
 }
+.md\:relative {
+  @media (width >= 48rem) {
+    position: relative;
+  }
+}
 .md\:inset-0 {
   @media (width >= 48rem) {
     inset: calc(var(--spacing) * 0);
+  }
+}
+.md\:top-0 {
+  @media (width >= 48rem) {
+    top: calc(var(--spacing) * 0);
+  }
+}
+.md\:mx-6 {
+  @media (width >= 48rem) {
+    margin-inline: calc(var(--spacing) * 6);
+  }
+}
+.md\:mt-0 {
+  @media (width >= 48rem) {
+    margin-top: calc(var(--spacing) * 0);
+  }
+}
+.md\:flex {
+  @media (width >= 48rem) {
+    display: flex;
+  }
+}
+.md\:w-auto {
+  @media (width >= 48rem) {
+    width: auto;
+  }
+}
+.md\:translate-x-0 {
+  @media (width >= 48rem) {
+    --tw-translate-x: calc(var(--spacing) * 0);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+}
+.md\:grid-cols-3 {
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.md\:flex-row {
+  @media (width >= 48rem) {
+    flex-direction: row;
+  }
+}
+.md\:items-center {
+  @media (width >= 48rem) {
+    align-items: center;
+  }
+}
+.md\:justify-between {
+  @media (width >= 48rem) {
+    justify-content: space-between;
+  }
+}
+.md\:bg-transparent {
+  @media (width >= 48rem) {
+    background-color: transparent;
+  }
+}
+.md\:p-0 {
+  @media (width >= 48rem) {
+    padding: calc(var(--spacing) * 0);
+  }
+}
+.md\:opacity-100 {
+  @media (width >= 48rem) {
+    opacity: 100%;
+  }
+}
+.lg\:grid-cols-4 {
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 .rtl\:rotate-180 {
@@ -4407,6 +4637,11 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
 .dark\:\!bg-gray-700 {
   @media (prefers-color-scheme: dark) {
     background-color: var(--color-gray-700) !important;
+  }
+}
+.dark\:bg-blue-200 {
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-blue-200);
   }
 }
 .dark\:bg-blue-600 {
@@ -4464,6 +4699,16 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
     color: var(--color-blue-500);
   }
 }
+.dark\:text-blue-800 {
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-blue-800);
+  }
+}
+.dark\:text-gray-200 {
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-gray-200);
+  }
+}
 .dark\:text-gray-300 {
   @media (prefers-color-scheme: dark) {
     color: var(--color-gray-300);
@@ -4504,13 +4749,6 @@ button, input:where([type='button'], [type='reset'], [type='submit']), ::file-se
       @media (hover: hover) {
         color: var(--color-white);
       }
-    }
-  }
-}
-.dark\:file\:bg-gray-800 {
-  @media (prefers-color-scheme: dark) {
-    &::file-selector-button {
-      background-color: var(--color-gray-800);
     }
   }
 }

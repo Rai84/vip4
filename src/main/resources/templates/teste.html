@@ -11,6 +11,33 @@
 
     <div th:replace="fragments/menup :: aside"></div>
 
-    
+    <div class="absolute top-24 h-screen w-full z-10 p-5">
+        <h1 class="text-3xl font-semibold text-white mb-5">Ofertas do dia</h1>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div th:each="produto : ${produtos}" class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <img class="p-8 rounded-t-lg w-full h-48 object-cover" th:src="${produto.getImgUrls()[0]}" alt="Imagem do produto" />
+                </a>
+                <div class="px-5 pb-5">
+                    <a href="#">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                            <span th:text="${produto.nomeProduto}"></span>
+                        </h5>
+                    </a>
+                    <div class="flex items-center mt-2.5 mb-5">
+                        <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                            <i class="bi bi-star-fill" th:each="i : ${#numbers.sequence(1, produto.avaliacao)}"></i>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm dark:bg-blue-200 dark:text-blue-800 ms-3" th:text="${produto.avaliacao} + ' Estrelas'"></span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-3xl font-bold text-gray-900 dark:text-white" th:text="'R$ ' + ${produto.preco}"></span>
+                        <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Adicionar ao Carrinho</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
