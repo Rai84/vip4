@@ -70,7 +70,7 @@
               <a th:href="@{/produtos/toggle-status/{id}(id=${produto.idProduto})}" onclick="return confirmAction(event, '@{/produtos/toggle-status/{id}(id=${produto.idProduto})}')"
               class="text-blue-600 hover:underline px-3 py-1 rounded-lg">Ativar/Desativar</a>
               <span class="mx-2">|</span>
-              <a th:href="@{/produtos/delete/{id}(id=${produto.idProduto})}" class="text-red-600 hover:underline px-3 py-1 rounded-lg">Excluir</a>
+              <!-- <a th:href="@{/produtos/delete/{id}(id=${produto.idProduto})}" class="text-red-600 hover:underline px-3 py-1 rounded-lg">Excluir</a> -->
               <span class="mx-2">|</span>
               <button class="text-green-500 hover:underline px-3 py-1 rounded-lg" 
                       onclick="openModal(this)"
