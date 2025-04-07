@@ -39,9 +39,13 @@ public class Cliente {
     @Column(name = "endereco", nullable = false)
     private String endereco;
 
+    @NotNull
+    @Column(name = "senha", nullable = false)
+    private String senha;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "criadoEm", nullable = false)
+    @Column(name = "criadoEm", nullable = false, updatable = false)
     private Date criadoEm;
 
     // Getters e Setters
@@ -93,6 +97,14 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public Date getCriadoEm() {
         return criadoEm;
     }
@@ -110,6 +122,7 @@ public class Cliente {
                 ", email='" + email + '\'' +
                 ", telefone='" + telefone + '\'' +
                 ", endereco='" + endereco + '\'' +
+                ", senha='" + senha + '\'' +
                 ", criadoEm=" + criadoEm +
                 '}';
     }

@@ -7,10 +7,18 @@
     <link rel="stylesheet" th:href="@{/css/output.css}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-stone-950">
+<body class="bg-stone-950 text-white">
 
+    <!-- Menu lateral -->
     <div th:replace="fragments/menu :: aside"></div>
 
+    <h1>Painel de Controle</h1>
+    <div class="absolute left-96">
+        <p>ID do Usuário: <span th:text="${userId}"></span></p>
+        <p>Email do Usuário: <span th:text="${userEmail}"></span></p>
+        <p>Nome do Usuário: <span th:text="${userName}"></span></p>
+        <p>Tipo do Usuário: <span th:text="${userType}"></span></p>
+    </div>
     
 </body>
 </html>

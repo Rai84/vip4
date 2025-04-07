@@ -8,7 +8,6 @@ import com.pi.vip4.validation.CPFValid;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 
@@ -132,5 +131,10 @@ public class User {
         ", status=" + status +
         ", criadoEm=" + criadoEm +
         '}';
+  }
+
+  public User orElseThrow(Object object) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
   }
 }

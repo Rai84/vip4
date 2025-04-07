@@ -1,6 +1,5 @@
 package com.pi.vip4.config;
 
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -52,6 +50,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/login", "/css/**", "/js/**").permitAll()
+                .antMatchers("/painel").authenticated() // Garante que /painel só pode ser acessada por usuários
+                                                        // autenticados
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -63,6 +63,7 @@ public class SecurityConfig {
                 })
                 .successHandler((request, response, authentication) -> {
                     logger.info("Usuário autenticado com sucesso: {}", authentication.getName());
+                    logger.info("Redirecionando para /painel...");
                     response.sendRedirect("/painel");
                 })
                 .permitAll()
