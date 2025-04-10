@@ -1,83 +1,54 @@
 package com.pi.vip4.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import com.pi.vip4.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.pi.vip4.service.CustomUserDetailsService;
+import java.util.List;
 
 @Configuration
+@Order(2) // prioridade menor
 public class SecurityConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        logger.info("Inicializando PasswordEncoder (BCrypt)");
-        return new BCryptPasswordEncoder();
-    }
+    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http,
+            @Qualifier("userAuthenticationProvider") DaoAuthenticationProvider provider) throws Exception {
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        logger.info("Configurando AuthenticationManager");
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(CustomUserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
-        logger.info("Configurando DaoAuthenticationProvider");
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder);
-        return authProvider;
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        logger.info("Configurando SecurityFilterChain");
+        AuthenticationManager authManager = new ProviderManager(List.of(provider));
 
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/login", "/css/**", "/js/**").permitAll()
-                .antMatchers("/painel").authenticated() // Garante que /painel só pode ser acessada por usuários
-                                                        // autenticados
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .failureHandler((request, response, exception) -> {
-                    logger.error("Falha na autenticação: {}", exception.getMessage());
-                    response.sendRedirect("/login?error=true");
-                })
-                .successHandler((request, response, authentication) -> {
-                    logger.info("Usuário autenticado com sucesso: {}", authentication.getName());
-                    logger.info("Redirecionando para /painel...");
-                    response.sendRedirect("/painel");
-                })
-                .permitAll()
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessHandler((request, response, authentication) -> {
-                    if (authentication != null) {
-                        logger.info("Usuário deslogado: {}", authentication.getName());
-                    }
-                    response.sendRedirect("/login?logout=true");
-                })
-                .permitAll();
+                .securityMatcher("/login", "/logout", "/admin/**", "/estoque/**", "/painel", "/enderecos-entrega/**")
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/logout", "/css/**", "/js/**", "/painel").permitAll()
+                        .requestMatchers("/admin/**", "/estoque/**", "/painel").hasAnyRole("ADMIN", "ESTOQUISTA")
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/painel", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true")
+                        .permitAll())
+                .authenticationManager(authManager);
 
         return http.build();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider userAuthenticationProvider(CustomUserDetailsService userService,
+            PasswordEncoder encoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userService);
+        provider.setPasswordEncoder(encoder);
+        return provider;
     }
 }

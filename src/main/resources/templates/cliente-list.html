@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Clientes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" th:href="@{/css/output.css}">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-950 flex">
+
+  <!-- Menu Lateral -->
+  <div th:replace="~{fragments/menu :: aside}" class="w-64 bg-gray-800 text-white h-screen"></div>
+
+  <!-- Conteúdo Principal -->
+  <div class="flex-1 p-4 ml-74 max-w-6xl mt-3">
+    
+    <div class="flex gap-4">
+      <h1 class="text-3xl font-semibold text-white mr-44">Lista de Clientes</h1>
+      <!-- Botão Novo Cliente -->
+      <a th:href="@{/clientes/new}" class="text-white bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-lg mb-4 inline-block">Criar Novo Cliente</a>
+
+      <!-- Campo de Busca (não funcional ainda) -->
+      <div class="relative">
+        <div class="rtl:inset-r-0 pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 mb-4">
+          <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          </svg>
+        </div>
+        <input type="text" id="table-search-clientes" class="block w-80 rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Buscar cliente" />
+      </div>
+
+      <!-- Paginação -->
+      <div class="flex items-center gap-2.5 w-40 mb-4">
+        <a th:if="${clientesPage.hasPrevious()}" th:href="@{/clientes(page=${clientesPage.number - 1})}">
+          <i class="bi bi-arrow-left-circle text-white"></i>
+        </a>
+        <span class="mx-2.5 text-white">Página <span th:text="${clientesPage.number + 1}"></span> de <span th:text="${clientesPage.totalPages}"></span></span>
+        <a th:if="${clientesPage.hasNext()}" th:href="@{/clientes(page=${clientesPage.number + 1})}">
+          <i class="bi bi-arrow-right-circle text-white"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tabela -->
+    <div class="overflow-x-auto bg-neutral-900 shadow-md rounded-lg">
+  <table class="w-full text-left text-sm text-gray-500">
+    <thead class="bg-neutral-900 text-xs text-gray-700 uppercase border-b border-neutral-800">
+      <tr>
+        <th class="px-6 py-3">ID</th>
+        <th class="px-6 py-3">Nome</th>
+        <th class="px-6 py-3">CPF</th>
+        <th class="px-6 py-3">Email</th>
+        <th class="px-6 py-3">Telefone</th>
+        <th class="px-6 py-3">Gênero</th>
+        <th class="px-6 py-3">Nascimento</th>
+        <th class="px-6 py-3">criadoEm</th>
+        <th class="px-6 py-3">Ações</th>
+        <th class="px-6 py-3">Endereços</th> <!-- nova coluna -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="cliente : ${clientes}" class="border-b border-neutral-900 hover:bg-neutral-700">
+        <td class="px-6 py-4" th:text="${cliente.id}"></td>
+        <td class="px-6 py-4" th:text="${cliente.nome}"></td>
+        <td class="px-6 py-4" th:text="${cliente.cpf}"></td>
+        <td class="px-6 py-4" th:text="${cliente.email}"></td>
+        <td class="px-6 py-4" th:text="${cliente.telefone}"></td>
+        <td class="px-6 py-4" th:text="${cliente.genero}"></td>
+       
+        <td class="px-6 py-4" th:text="${cliente.DataNascimento}"></td>
+
+
+
+        <td class="px-6 py-4" th:text="${cliente.enderecoFaturamento.uf}"> </td>
+
+        <td class="px-6 py-4">
+          <a th:href="@{/clientes/edit/{id}(id=${cliente.id})}" class="text-blue-600 hover:underline">Editar</a>
+          <span class="mx-2">|</span>
+          <a th:href="@{/clientes/delete/{id}(id=${cliente.id})}" class="text-red-600 hover:underline" onclick="return confirm('Deseja realmente excluir este cliente?');">Excluir</a>
+        </td>
+         <td class="px-6 py-4">
+          <a th:href="@{/enderecos-entrega/cliente/{id}(id=${cliente.id})}" class="text-green-500 hover:underline">
+            Ver Endereços
+          </a>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  </div>
+</body>
+</html>

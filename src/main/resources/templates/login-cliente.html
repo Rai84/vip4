@@ -1,0 +1,23 @@
+<!-- templates/login-cliente.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Login Cliente</title>
+</head>
+<body>
+  <h2>Login do Cliente</h2>
+  <form method="post" th:action="@{/login-cliente}">
+    <input type="email" name="username" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Senha" required>
+    <button type="submit">Entrar</button>
+  </form>
+
+  <div th:if="${param.error}">
+    <p style="color:red;">Email ou senha inválidos.</p>
+  </div>
+
+  <div th:if="${param.logout}">
+    <p style="color:green;">Logout realizado com sucesso.</p>
+  </div>
+</body>
+</html>

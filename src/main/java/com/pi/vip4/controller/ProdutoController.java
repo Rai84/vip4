@@ -24,7 +24,7 @@ import com.pi.vip4.repository.ProdutoRepository;
 import com.pi.vip4.repository.ImgProdutoRepository;
 import com.pi.vip4.service.ProdutoService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/produtos")

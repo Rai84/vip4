@@ -8,7 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-stone-950 text-white">
- 
+
+  <!-- Menu reutilizável -->
+  <div th:replace="~{fragments/menup :: aside}"></div>
+
   <!-- Lista de produtos -->
   <div class="pt-40 px-8">
     <h1 class="text-3xl font-semibold mb-6">Teste - Produtos</h1>
@@ -36,36 +39,15 @@
     </div>
   </div>
 
-  
-
-  <!-- Menu reutilizável -->
-  <div th:replace="~{fragments/menup :: aside(
-  id=${id},
-  userName=${userName},
-  email=${email},
-  cpf=${cpf},
-  telefone=${telefone},
-  genero=${genero},
-  nascimento=${nascimento},
-  enderecoFaturamento=${enderecoFaturamento}
-  )}"></div>
-
   <!-- Modal do Carrinho -->
   <div th:replace="~{fragments/carrinhoModal :: div}"></div>
 
   <!-- Modal de Login -->
-  <!-- <div th:replace="~{fragments/loginModal :: div}"></div> -->
-
-  <div th:replace="~{fragments/ModalCliente :: div}"></div>
-
-
-
-
+  <div th:replace="~{fragments/loginModal :: div}"></div>
 
   <!-- Script JS -->
   <script th:src="@{/js/carrinho.js}"></script>
   <script th:src="@{/js/login.js}"></script>
-  <script th:src="@{/js/modalCliente.js}"></script>
 
 </body>
 </html>

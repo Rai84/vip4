@@ -1,6 +1,6 @@
 package com.pi.vip4.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "imagens_produto")

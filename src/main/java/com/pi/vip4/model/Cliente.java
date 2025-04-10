@@ -3,10 +3,13 @@ package com.pi.vip4.model;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.pi.vip4.validation.CPFValid;
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -14,41 +17,54 @@ import java.util.Date;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    @Column(name = "nome", nullable = false)
+    @NotBlank
+    @Size(min = 3, message = "O nome deve ter no mínimo 3 letras")
+    @Column(nullable = false)
     private String nome;
 
     @NotNull
-    @Column(name = "cpf", nullable = false, unique = true)
     @CPFValid
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @NotNull
     @Email
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @NotNull
-    @Column(name = "telefone", nullable = false)
+    @Column(nullable = false)
     private String telefone;
 
     @NotNull
-    @Column(name = "endereco", nullable = false)
-    private String endereco;
+    @Column(name = "data_nascimento", nullable = false)
+    private LocalDate dataNascimento;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String genero;
+
+    @Embedded
+    private EnderecoFaturamento enderecoFaturamento;
 
     @NotNull
-    @Column(name = "senha", nullable = false)
+    @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
+    @Column(nullable = false)
     private String senha;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "criadoEm", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private Date criadoEm;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EnderecoEntrega> enderecosEntrega = new ArrayList<>();
+
     // Getters e Setters
+
     public long getId() {
         return id;
     }
@@ -89,12 +105,28 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public EnderecoFaturamento getEnderecoFaturamento() {
+        return enderecoFaturamento;
+    }
+
+    public void setEnderecoFaturamento(EnderecoFaturamento enderecoFaturamento) {
+        this.enderecoFaturamento = enderecoFaturamento;
     }
 
     public String getSenha() {
@@ -113,6 +145,14 @@ public class Cliente {
         this.criadoEm = criadoEm;
     }
 
+    public List<EnderecoEntrega> getEnderecosEntrega() {
+        return enderecosEntrega;
+    }
+
+    public void setEnderecosEntrega(List<EnderecoEntrega> enderecosEntrega) {
+        this.enderecosEntrega = enderecosEntrega;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -121,9 +161,12 @@ public class Cliente {
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
                 ", telefone='" + telefone + '\'' +
-                ", endereco='" + endereco + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", genero='" + genero + '\'' +
+                ", enderecoFaturamento=" + enderecoFaturamento +
                 ", senha='" + senha + '\'' +
                 ", criadoEm=" + criadoEm +
+                ", enderecosEntrega=" + enderecosEntrega +
                 '}';
     }
 }

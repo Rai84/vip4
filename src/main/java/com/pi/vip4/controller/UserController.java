@@ -16,7 +16,7 @@ import com.pi.vip4.repository.UserRepository;
 import com.pi.vip4.service.CustomUserDetails;
 import com.pi.vip4.service.CustomUserDetailsService;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

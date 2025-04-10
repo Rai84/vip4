@@ -3,8 +3,8 @@ package com.pi.vip4.validation;
 import br.com.caelum.stella.validation.CPFValidator;
 import br.com.caelum.stella.validation.InvalidStateException;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class CPFValidatorCaelum implements ConstraintValidator<CPFValid, String> {
 

@@ -5,9 +5,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.pi.vip4.validation.CPFValid;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 
