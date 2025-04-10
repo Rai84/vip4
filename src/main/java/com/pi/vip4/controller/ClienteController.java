@@ -50,7 +50,7 @@ public class ClienteController {
     public String createCliente(@Valid @ModelAttribute Cliente cliente) {
         cliente.setSenha(passwordEncoder.encode(cliente.getSenha()));
         clienteRepository.save(cliente);
-        return "redirect:/clientes";
+        return "redirect:/login-cliente";
     }
 
     @GetMapping("/edit/{id}")
@@ -84,7 +84,7 @@ public class ClienteController {
         }
 
         clienteRepository.save(cliente);
-        return "redirect:/clientes";
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")

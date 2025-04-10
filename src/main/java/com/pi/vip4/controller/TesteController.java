@@ -40,6 +40,8 @@ public class TesteController {
                 model.addAttribute("email", clienteDetails.getEmail());
                 model.addAttribute("cpf", clienteDetails.getCpf());
                 model.addAttribute("telefone", clienteDetails.getTelefone());
+                model.addAttribute("genero", clienteDetails.getGenero());
+                model.addAttribute("nascimento", clienteDetails.getDataNascimento());
 
                 // Endereço de faturamento
                 EnderecoFaturamento faturamento = clienteDetails.getEnderecoFaturamento();
