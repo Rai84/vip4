@@ -36,7 +36,7 @@ public class SecurityConfigCliente {
                         .failureUrl("/login-cliente?error=true")
                         .permitAll())
                 .logout(logout -> logout
-                        .logoutUrl("/logout-cliente")
+                        .logoutUrl("/")
                         .logoutSuccessUrl("/login-cliente?logout=true")
                         .permitAll())
                 .authenticationManager(authManager);

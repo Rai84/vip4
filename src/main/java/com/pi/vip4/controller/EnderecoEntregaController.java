@@ -48,7 +48,7 @@ public class EnderecoEntregaController {
     @PostMapping("/salvar")
     public String salvarEndereco(@Valid @ModelAttribute EnderecoEntrega enderecoEntrega) {
         enderecoEntregaRepository.save(enderecoEntrega);
-        return "redirect:/enderecos-entrega/cliente/" + enderecoEntrega.getCliente().getId();
+        return "redirect:/" + enderecoEntrega.getCliente().getId();
     }
 
     @GetMapping("/editar/{id}")

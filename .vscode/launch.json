@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<spring-boot-rest-api-tutorial>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.pi.vip4.Application",
+            "projectName": "spring-boot-rest-api-tutorial",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
