@@ -1,4 +1,4 @@
-package com.pi.vip4.service;
+package com.pi.vip4.service.Details;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

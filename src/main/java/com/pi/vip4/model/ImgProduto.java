@@ -17,7 +17,17 @@ public class ImgProduto {
     @Column(name = "imagemUrl")
     private String imagemUrl;
 
-    // Getters and Setters
+    // Construtor padrão
+    public ImgProduto() {
+    }
+
+    // Construtor personalizado
+    public ImgProduto(Produto produto, String imagemUrl) {
+        this.produto = produto;
+        this.imagemUrl = imagemUrl;
+    }
+
+    // Getters e Setters
     public Long getIdImgProduto() {
         return idImgProduto;
     }

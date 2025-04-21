@@ -1,6 +1,5 @@
 package com.pi.vip4.config;
 
-import com.pi.vip4.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -9,6 +8,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.pi.vip4.service.Details.CustomUserDetailsService;
 
 import java.util.List;
 

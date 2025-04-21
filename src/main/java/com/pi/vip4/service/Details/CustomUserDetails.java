@@ -1,4 +1,4 @@
-package com.pi.vip4.service;
+package com.pi.vip4.service.Details;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
