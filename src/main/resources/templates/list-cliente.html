@@ -70,7 +70,7 @@
         <td class="px-2 py-4 text-center" th:text="${cliente.enderecoFaturamento.uf}"> </td>
 
         <td class="px-6 py-4">
-          <a th:href="@{/clientes/edit/{id}(id=${cliente.id})}" class="text-blue-600 hover:underline">Editar</a>
+          <a th:href="@{/clientes/user/edit/{id}(id=${cliente.id})}" class="text-blue-600 hover:underline">Editar</a>
           <span class="mx-2">|</span>
           <a th:href="@{/clientes/delete/{id}(id=${cliente.id})}" class="text-red-600 hover:underline" onclick="return confirm('Deseja realmente excluir este cliente?');">Excluir</a>
           <span class="mx-2">|</span>

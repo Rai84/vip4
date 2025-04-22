@@ -51,7 +51,6 @@ public class Cliente {
     private EnderecoFaturamento enderecoFaturamento;
 
     @NotNull
-    @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
     @Column(nullable = false)
     private String senha;
 

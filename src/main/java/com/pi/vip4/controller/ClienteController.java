@@ -41,18 +41,37 @@ public class ClienteController {
         return "redirect:/login-cliente";
     }
 
+    // --- CLIENTE: Exibe formulário para editar cliente
     @GetMapping("/edit/{id}")
     public String showUpdateClienteForm(@PathVariable("id") Long clienteId, Model model) throws Exception {
         Cliente cliente = clienteService.buscarClientePorId(clienteId);
         model.addAttribute("cliente", cliente);
-        return "edit-cliente-form";
+        return "edit-cliente-form-modal"; // para o cliente
     }
 
+    // --- USER (admin ): Exibe formulário de edição 
+    @GetMapping("/user/edit/{id}")
+    public String showUpdateClienteFormUser(@PathVariable("id") Long clienteId, Model model) throws Exception {
+        Cliente cliente = clienteService.buscarClientePorId(clienteId);
+        model.addAttribute("cliente", cliente);
+        return "edit-cliente-form"; // dentro do painel
+    }
+
+    // --- CLIENTE: Salva alterações e volta para o / tela inicial
     @PostMapping("/update/{id}")
     public String updateCliente(@PathVariable("id") Long clienteId, @Valid @ModelAttribute Cliente clienteDetails)
             throws Exception {
         clienteService.atualizarCliente(clienteId, clienteDetails);
-        return "redirect:/";
+        return "redirect:/"; //para o cliente
+    }
+
+    // --- USER (admin ): Salva alterações e volta para o lista de clientes
+    @PostMapping("/user/update/{id}")
+    public String updateClienteFromUser(@PathVariable("id") Long clienteId,
+            @Valid @ModelAttribute Cliente clienteDetails)
+            throws Exception {
+        clienteService.atualizarCliente(clienteId, clienteDetails);
+        return "redirect:/painel";
     }
 
     @GetMapping("/delete/{id}")

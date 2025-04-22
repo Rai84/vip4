@@ -17,7 +17,7 @@
         </a>
     </div>
 
-    <form th:action="@{'/clientes/update/' + ${cliente.id}}" method="post" th:object="${cliente}" class="space-y-4" id="formulario">
+    <form th:action="@{'/clientes/user/update/' + ${cliente.id}}" method="post" th:object="${cliente}" class="space-y-4" id="formulario">
         <div>
             <label for="nome" class="block text-sm font-medium">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required

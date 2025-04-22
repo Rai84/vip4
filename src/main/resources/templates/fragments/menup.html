@@ -29,7 +29,12 @@
         <div class="flex flex-col md:flex-row md:items-center gap-6 mt-4 md:mt-0">
           <!-- Usuário -->
           <div class="flex items-center gap-4">
-            <i class="bi bi-person-circle text-[28px] text-white cursor-pointer"></i>
+            <div th:if="${userName == null}">
+              <i class="bi bi-person-circle text-[28px] text-white cursor-pointer"></i>
+            </div>
+            <div th:if="${userName != null}">
+              <i class="bi bi-person-circle text-[28px] text-white cursor-pointer" id="abrirModalCliente"></i>
+            </div>
             <div class="font-medium dark:text-white">
             
               <!-- Se cliente estiver logado -->
@@ -45,10 +50,14 @@
               <!-- Se cliente NÃO estiver logado -->
               <div th:if="${userName == null}">
                 <div class="text-[12px]">Olá, bem-vindo!</div>
-                <a href="/login-cliente"
-                   class="text-gray-500 hover:text-blue-700 text-left focus:outline-none">
-                  Entrar | Cadastrar
-                </a>
+                <button onclick="abrirModalLogin()" class="text-gray-500 hover:text-blue-700 text-left focus:outline-none">Entrar | Cadastrar</button>
+              </div>
+
+              <!-- Container do Modal -->
+              <div id="modalLoginContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                <div id="modalLoginContent" class="bg-white text-black p-6 rounded-lg shadow-lg relative w-[90%] max-w-md">
+                  <button onclick="fecharModalLogin()" class="absolute top-2 right-2 text-2xl text-gray-500 hover:text-red-600">&times;</button>
+                </div>
               </div>
             
             </div>

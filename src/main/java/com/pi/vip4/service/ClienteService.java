@@ -49,9 +49,14 @@ public class ClienteService {
         cliente.setTelefone(clienteDetails.getTelefone());
         cliente.setGenero(clienteDetails.getGenero());
         cliente.setDataNascimento(clienteDetails.getDataNascimento());
-        cliente.setEnderecoFaturamento(clienteDetails.getEnderecoFaturamento());
 
-        if (!clienteDetails.getSenha().isBlank()) {
+        // Garante que o endereço não seja nulo
+        if (clienteDetails.getEnderecoFaturamento() != null) {
+            cliente.setEnderecoFaturamento(clienteDetails.getEnderecoFaturamento());
+        }
+
+        // Só atualiza a senha se for preenchida
+        if (clienteDetails.getSenha() != null && !clienteDetails.getSenha().isBlank()) {
             cliente.setSenha(passwordEncoder.encode(clienteDetails.getSenha()));
         }
 

@@ -5,9 +5,18 @@
 
     <h2 class="text-xl font-bold mb-2">Olá, <span th:text="${userName}">Usuário</span></h2>
 
-    <a th:href="@{/clientes/edit/{id}(id=${id})}" class="block mt-4 text-blue-600 hover:underline">
+    <a href="javascript:void(0)" onclick="abrirModalEditarCliente()" class="block mt-4 text-blue-600 hover:underline">
       Atualizar meus dados
     </a>
+
+
+    <!-- Container do Modal de Edição -->
+    <div id="modalEditarClienteContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+      <div id="modalEditarClienteContent" class="bg-neutral-900 text-white p-6 rounded-lg shadow-lg relative w-[90%] max-w-2xl">
+        <button onclick="fecharModalEditarCliente()" class="absolute top-2 right-2 text-2xl text-gray-400 hover:text-red-600">&times;</button>
+      </div>
+    </div>
+
 
     <!-- Botão de logout -->
     <form th:action="@{/}" method="post" class="mt-4">

@@ -12,6 +12,7 @@
   <!-- Menu reutilizável -->
   <div th:replace="~{fragments/menup :: aside}"></div>
 
+  <!-- Conteúdo Principal -->
   <h1 class="text-3xl font-semibold mb-6 pt-36"></h1>
   <div th:if="${userName != null}">
   <h2 class="text-xl font-bold mb-2">Bem-vindo, <span th:text="${userName}"></span>!</h2>
@@ -79,6 +80,7 @@
   <script th:src="@{/js/carrinho.js}"></script>
   <script th:src="@{/js/login.js}"></script>
   <script th:src="@{/js/modalCliente.js}"></script>
+  <script th:src="@{/js/teste.js}"></script>
 
 </body>
 </html>

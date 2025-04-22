@@ -29,8 +29,8 @@ public class CustomClienteDetailsService implements UserDetailsService {
                     return new UsernameNotFoundException("Cliente não encontrado");
                 });
 
-        logger.info("Cliente encontrado: ID = {}, Email = {}, Nome = {}", cliente.getId(), cliente.getEmail(),
-                cliente.getNome());
+        logger.info("Cliente encontrado: ID = {}, Email = {}, Nome = {}, Senha = {}", cliente.getId(), cliente.getEmail(),
+                cliente.getNome(), cliente.getSenha());
 
         if (cliente.getEnderecoFaturamento() != null) {
             logger.info("Endereço de faturamento: {}, {}, {} - {}",
