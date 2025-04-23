@@ -16,6 +16,7 @@ public class TesteController {
     private TesteService testeService;
     @Autowired
     private ClienteRepository clienteRepository;
+    
 
     @GetMapping("/")
     public String showAllProdutos(Model model, Authentication authentication) {
@@ -51,4 +52,28 @@ public class TesteController {
         }
     }
 
+    @GetMapping("/modal-cliente")
+    public String getModalCliente(Model model, Authentication authentication) {
+        try {
+            if (authentication == null) {
+                throw new RuntimeException("Usuário não está autenticado.");
+            }
+
+            String email = authentication.getName();
+            Cliente cliente = clienteRepository.findByEmail(email)
+                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado com e-mail: " + email));
+
+            model.addAttribute("userName", cliente.getNome());
+            model.addAttribute("id", cliente.getId());
+            model.addAttribute("email", cliente.getEmail());
+
+            return "fragments/ModalCliente :: modalCliente";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    
 }

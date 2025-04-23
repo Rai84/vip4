@@ -1,26 +1,31 @@
 document.addEventListener("DOMContentLoaded", function () {
   const botoesAbrir = document.querySelectorAll("#abrirModalCliente");
-  const botaoFechar = document.getElementById("fecharModalCliente");
-  const modal = document.getElementById("modalCliente");
 
-  // Abre com qualquer um dos botões
   botoesAbrir.forEach(botao => {
     botao.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-    });
-  });
+      fetch("/modal-cliente")
+        .then(response => response.text())
+        .then(html => {
+          const container = document.getElementById("modalClienteContainer");
+          container.innerHTML = html;
 
-  // Fecha com o X
-  if (botaoFechar) {
-    botaoFechar.addEventListener("click", () => {
-      modal.classList.add("hidden");
-    });
-  }
+          const modal = document.getElementById("modalCliente");
+          const botaoFechar = document.getElementById("fecharModalCliente");
 
-  // Fecha clicando fora do modal
-  window.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      modal.classList.add("hidden");
-    }
+          if (modal && botaoFechar) {
+            modal.classList.remove("hidden");
+
+            botaoFechar.addEventListener("click", () => {
+              modal.classList.add("hidden");
+            });
+
+            window.addEventListener("click", (event) => {
+              if (event.target === modal) {
+                modal.classList.add("hidden");
+              }
+            });
+          }
+        });
+    });
   });
 });

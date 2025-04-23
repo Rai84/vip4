@@ -36,10 +36,13 @@ public class SecurityConfigCliente {
                         .defaultSuccessUrl("/", true)
                         .failureUrl("/login-cliente?error=true")
                         .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/")
-                        .logoutSuccessUrl("/login-cliente?logout=true")
-                        .permitAll())
+                        .logout(logout -> logout
+                                .logoutUrl("/logout-cliente") // ou /logout-cliente, se for o seu caso
+                                .logoutSuccessUrl("/") // redireciona após logout
+                                .invalidateHttpSession(true)
+                                .deleteCookies("JSESSIONID")
+                                )
+
                 .authenticationManager(authManager);
 
         return http.build();
