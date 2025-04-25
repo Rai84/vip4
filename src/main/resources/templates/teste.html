@@ -13,8 +13,8 @@
   <div th:replace="~{fragments/menup :: aside}"></div>
 
   <!-- Conteúdo Principal -->
-  <h1 class="text-3xl font-semibold mb-6 pt-36"></h1>
-  <div th:if="${userName != null}">
+  <!--<h1 class="text-3xl font-semibold mb-6 pt-36"></h1>
+   <div th:if="${userName != null}">
   <h2 class="text-xl font-bold mb-2">Bem-vindo, <span th:text="${userName}"></span>!</h2>
   <p><strong>ID:</strong> <span th:text="${id}"></span></p>
   <p><strong>Email:</strong> <span th:text="${email}"></span></p>
@@ -34,26 +34,32 @@
     <span th:text="${enderecoFaturamento.cidade}"></span> /
     <span th:text="${enderecoFaturamento.uf}"></span>
   </p>
-  </div>
+  </div> -->
 
 </div>
 
   <!-- Lista de produtos -->
-  <div class="pt-40 px-8">
+  <div class="pt-28 px-8">
     <h1 class="text-3xl font-semibold mb-6">Teste - Produtos</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <div th:each="produto : ${produtos}" class="bg-white text-black rounded-lg shadow p-4">
         <img th:src="${produto.getImgUrls()[0]}" alt="Imagem do Produto"
-             class="h-40 w-full object-cover rounded mb-3" />
+             class="h-72 w-full object-cover rounded mb-3" />
         <h2 class="text-lg font-semibold" th:text="${produto.nomeProduto}">Nome</h2>
         <p class="text-gray-600" th:text="'R$ ' + ${produto.preco}">Preço</p>
+        <div>
+          
+        </div>
+
         <button
-          class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-full w-10 h-10 hover:bg-blue-700 flex items-center justify-center
+          relative bottom-32 left-64"
+          
           th:data-nome="${produto.nomeProduto}"
           th:data-preco="${produto.preco}"
           th:data-imagem="${produto.getImgUrls()[0]}"
           onclick="addToCart(this)">
-          Adicionar ao Carrinho
+          <i class="bi bi-plus-lg"></i>
         </button>
         <a th:href="@{/{id}(id=${produto.idProduto})}" 
           class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 block text-center">
