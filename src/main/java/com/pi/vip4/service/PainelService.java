@@ -1,7 +1,7 @@
 package com.pi.vip4.service;
 
-import com.pi.vip4.service.Details.CustomUserDetails;
-import com.pi.vip4.service.Details.CustomUserDetailsService;
+import com.pi.vip4.service.details.CustomUserDetails;
+import com.pi.vip4.service.details.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
