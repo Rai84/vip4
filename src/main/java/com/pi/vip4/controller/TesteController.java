@@ -4,6 +4,7 @@ import com.pi.vip4.model.Cliente;
 import com.pi.vip4.repository.ClienteRepository;
 import com.pi.vip4.service.TesteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +25,14 @@ public class TesteController {
         return "teste";
     }
 
-    @GetMapping("/modal-login")
+    @GetMapping("/modal-login-cliente")
     public String mostrarModalLogin() {
         return "fragments/loginModal :: div";
+    }
+
+    @GetMapping("/modal-carrinho")
+    public String mostrarModalCarrinho() {
+        return "fragments/carrinhoModal :: div";
     }
 
     @GetMapping("/modal-editar-cliente")

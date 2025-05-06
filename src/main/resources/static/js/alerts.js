@@ -6,7 +6,7 @@ function removerImagem(imgId) {
                 alert("Imagem removida com sucesso!");
                 location.reload(); // Atualiza a página para refletir a exclusão
             } else {
-                alert("Erro ao remover a imagem.");
+                alert("Erro ao remover a imagem aaaaaaaaaaa.");
             }
         })
         .catch(error => console.error("Erro:", error));

@@ -4,7 +4,7 @@ const cartItems = [];
 
 function addToCart(button) {
   const nomeProduto = button.getAttribute("data-nome");
-  let precoProduto = parseFloat(button.getAttribute("data-preco").replace(",", "."));
+  const precoProduto = parseFloat(button.getAttribute("data-preco").replace(",", "."));
   const imgUrl = button.getAttribute("data-imagem");
 
   const produtoExistente = cartItems.find(prod => prod.nome === nomeProduto);
@@ -16,13 +16,14 @@ function addToCart(button) {
   }
 
   totalCarrinho += precoProduto;
-
   atualizarCarrinho();
   atualizarTotalComFrete();
 }
 
 function atualizarCarrinho() {
   const cartContent = document.getElementById("cartContent");
+  if (!cartContent) return;
+
   cartContent.innerHTML = "";
 
   cartItems.forEach(produto => {
@@ -69,7 +70,9 @@ function removerProduto(nome) {
 
 function atualizarTotalComFrete() {
   const totalFinal = totalCarrinho + freteSelecionado;
-  document.getElementById("totalValor").textContent = `Total: R$ ${totalFinal.toFixed(2)}`;
+
+  const totalValor = document.getElementById("totalValor");
+  if (totalValor) totalValor.textContent = `Total: R$ ${totalFinal.toFixed(2)}`;
 
   const topo = document.getElementById("totalCarrinhoModal");
   if (topo) topo.textContent = `R$ ${totalFinal.toFixed(2)}`;
@@ -81,28 +84,63 @@ function selecionarFrete(valor) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const openModalBtn = document.getElementById("openModalBtn");
-  const closeModalBtn = document.getElementById("closeModalBtn");
-  const cartModal = document.getElementById("cartModal");
+  const cartButton = document.getElementById("cartButton");
+  const modalContainer = document.getElementById("modalCarrinhoContainer");
 
-  if (openModalBtn) {
-    openModalBtn.addEventListener("click", () => {
-      cartModal.classList.remove("hidden");
-      cartModal.classList.add("flex");
-    });
-  }
+  if (!cartButton || !modalContainer) return;
 
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", () => {
-      cartModal.classList.remove("flex");
-      cartModal.classList.add("hidden");
-    });
-  }
+  cartButton.addEventListener("click", () => {
+    fetch("/modal-carrinho")
+      .then(response => {
+        // Detecta se foi redirecionado para o login do cliente
+        if (response.redirected && response.url.includes("/login-cliente")) {
+          return fetch("/modal-login-cliente")
+            .then(r => r.text())
+            .then(html => {
+              const loginContainer = document.getElementById("modalClienteContainer");
+              if (loginContainer) {
+                loginContainer.innerHTML = html;
 
-  cartModal.addEventListener("click", (e) => {
-    if (e.target === cartModal) {
-      cartModal.classList.remove("flex");
-      cartModal.classList.add("hidden");
-    }
+                const loginModal = document.getElementById("modalLogin");
+                if (loginModal) {
+                  loginModal.classList.remove("hidden");
+                  loginModal.classList.add("flex");
+                }
+              }
+            });
+        }
+
+        return response.text();
+      })
+      .then(html => {
+        if (!html) return;
+
+        modalContainer.innerHTML = html;
+
+        const cartModal = document.getElementById("cartModal");
+        const closeBtn = document.getElementById("closeModalBtn");
+
+        if (cartModal) {
+          cartModal.classList.remove("hidden");
+          cartModal.classList.add("flex");
+
+          if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+              cartModal.classList.remove("flex");
+              cartModal.classList.add("hidden");
+            });
+          }
+
+          cartModal.addEventListener("click", (e) => {
+            if (e.target === cartModal) {
+              cartModal.classList.remove("flex");
+              cartModal.classList.add("hidden");
+            }
+          });
+
+          atualizarCarrinho();
+          atualizarTotalComFrete();
+        }
+      });
   });
 });

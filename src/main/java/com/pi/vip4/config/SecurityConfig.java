@@ -3,6 +3,7 @@ package com.pi.vip4.config;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,42 +15,51 @@ import com.pi.vip4.service.details.CustomUserDetailsService;
 import java.util.List;
 
 @Configuration
-@Order(2) // prioridade menor
+@Order(2)
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http,
-            @Qualifier("userAuthenticationProvider") DaoAuthenticationProvider provider) throws Exception {
+        @Bean
+        public SecurityFilterChain userSecurityFilterChain(HttpSecurity http,
+                        @Qualifier("userAuthenticationProvider") DaoAuthenticationProvider provider) throws Exception {
 
-        AuthenticationManager authManager = new ProviderManager(List.of(provider));
+                AuthenticationManager authManager = new ProviderManager(List.of(provider));
 
-        http
-                .securityMatcher("/login", "/logout", "/admin/**", "/estoque/**", "/painel", "/enderecos-entrega/**")
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/logout", "/css/**", "/js/**", "/painel").permitAll()
-                        .requestMatchers("/admin/**", "/estoque/**", "/painel").hasAnyRole("ADMIN", "ESTOQUISTA")
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/painel", true)
-                        .failureUrl("/login?error=true")
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true")
-                        .permitAll())
-                .authenticationManager(authManager);
+                http
+                                .securityMatcher("/admin/**", "/estoque/**", "/painel", "/login", "/logout")
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/produtos/**", "/uploads/**", "/", "/css/**", "/modal-login-cliente",
+                                                                "/js/**")
+                                                .permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/produtos/**")
+                                                .hasAnyRole("ADMIN", "ESTOQUISTA")
+                                                .requestMatchers(HttpMethod.POST, "/produtos/**")
+                                                .hasAnyRole("ADMIN", "ESTOQUISTA")
+                                                .requestMatchers("/admin/**", "/estoque/**")
+                                                .hasAnyRole("ADMIN", "ESTOQUISTA")
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .loginProcessingUrl("/login")
+                                                .defaultSuccessUrl("/painel", true)
+                                                .failureUrl("/login?error=true")
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/login?logout=true")
+                                                .permitAll())
+                                .sessionManagement(session -> session
+                                                .sessionFixation().newSession())
+                                .authenticationManager(authManager);
 
-        return http.build();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public DaoAuthenticationProvider userAuthenticationProvider(CustomUserDetailsService userService,
-            PasswordEncoder encoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userService);
-        provider.setPasswordEncoder(encoder);
-        return provider;
-    }
+        @Bean
+        public DaoAuthenticationProvider userAuthenticationProvider(CustomUserDetailsService userService,
+                        PasswordEncoder encoder) {
+                DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+                provider.setUserDetailsService(userService);
+                provider.setPasswordEncoder(encoder);
+                return provider;
+        }
 }

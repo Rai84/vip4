@@ -1,4 +1,4 @@
-<aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-32 w-full" aria-label="Sidebar">
+<aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-full h-32" aria-label="Sidebar">
   <nav class="relative bg-white shadow dark:bg-neutral-900">
     <div class="container px-6 py-2.5 mx-auto md:flex md:justify-between md:items-center">
       <div class="flex items-center justify-between">
@@ -9,24 +9,26 @@
 
         <!-- SEARCH -->
         <div>
-          <label for="table-search" class="sr-only">Search</label>
-          <div class="relative">
-            <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-              <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                   viewBox="0 0 20 20">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-              </svg>
+          <form th:action="@{/produtos}" method="get">
+            <label for="table-search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                     viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+              </div>
+              <input type="text" name="search" id="table-search-products"
+                     class="block w-[600px] rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                     placeholder="Buscar produtos"/>
             </div>
-            <input type="text" id="table-search-products"
-                   class="block w-[600px] rounded-lg border border-gray-300 bg-gray-50 p-2 ps-10 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-neutral-900 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                   placeholder="Buscar produtos"/>
-          </div>
+          </form>
         </div>
       </div>
 
         <!-- Ícones à direita -->
-        <div class="flex flex-col md:flex-row md:items-center gap-6 mt-4 md:mt-0">
+        <div class="flex flex-col gap-6 mt-4 md:flex-row md:items-center md:mt-0">
           <!-- Usuário -->
           <div class="flex items-center gap-4">
             <div th:if="${userName == null}">
@@ -42,7 +44,7 @@
                 <div class="text-[12px]">
                   Olá, bem-vindo!
                 </div>
-                <button id="abrirModalCliente" class="text-gray-500 hover:text-blue-700 text-left focus:outline-none">
+                <button id="abrirModalCliente" class="text-left text-gray-500 hover:text-blue-700 focus:outline-none">
                   <span th:text="${userName}">Usuário</span>
                 </a>
               </div>
@@ -50,16 +52,9 @@
               <!-- Se cliente NÃO estiver logado -->
               <div th:if="${userName == null}">
                 <div class="text-[12px]">Olá, bem-vindo!</div>
-                <button onclick="abrirModalLogin()" class="text-gray-500 hover:text-blue-700 text-left focus:outline-none">Entrar | Cadastrar</button>
+                <button onclick="abrirModalLogin()" class="text-left text-gray-500 hover:text-blue-700 focus:outline-none">Entrar | Cadastrar</button>
               </div>
 
-              <!-- Container do Modal -->
-              <div id="modalLoginContainer" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-                <div id="modalLoginContent" class="bg-white text-black p-6 rounded-lg shadow-lg relative w-[90%] max-w-md">
-                  <button onclick="fecharModalLogin()" class="absolute top-2 right-2 text-2xl text-gray-500 hover:text-red-600">&times;</button>
-                </div>
-              </div>
-            
             </div>
           </div>
 
@@ -73,20 +68,28 @@
           </div>
         </div>
 
-        <!-- Carrinho -->
-        <div class="flex items-center gap-4" id="openModalBtn">
-          <i class="bi bi-cart text-[28px] text-white cursor-pointer"></i>
-          <div class="font-medium dark:text-white">
-            <div class="text-[12px]">Carrinho</div>
-            <div id="openModalBtn"><span id="totalCarrinhoModal" class="text-gray-500 hover:cursor-pointer hover:text-blue-700">R$ 0,00</span></div>
-          </div>
-        </div>
+        <!-- Botão do Carrinho -->
+<div id="cartButton" class="flex items-center gap-4 cursor-pointer">
+  <i class="bi bi-cart text-[28px] text-white"></i>
+  <div class="font-medium text-white">
+    <div class="text-[12px]">Carrinho</div>
+    <div>
+      <span id="totalCarrinhoModal" class="text-gray-500 hover:text-blue-700">
+        R$ 0,00
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+
       </div>
     </div>
   </nav>
 
   <nav class="bg-stone-950">
-    <div class="container flex items-center justify-center p-1 mx-auto text-gray-600 capitalize dark:text-gray-300 gap-6 border-b-2 border-gray-200 dark:border-gray-700">
+    <div class="container flex items-center justify-center gap-6 p-1 mx-auto text-gray-600 capitalize border-b-2 border-gray-200 dark:text-gray-300 dark:border-gray-700">
       <a href="#" class="text-gray-800 transition duration-300 dark:text-gray-200 mx-1.5 sm:mx-6">Alimentos e Bebidas 🍞🥤</a>
       <a href="#" class="text-gray-800 transition duration-300 dark:text-gray-200 mx-1.5 sm:mx-6">Higiene Pessoal 🧼🪥</a>
       <a href="#" class="text-gray-800 transition duration-300 dark:text-gray-200 mx-1.5 sm:mx-6">Limpeza Doméstica 🧽🧴</a>

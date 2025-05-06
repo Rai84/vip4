@@ -1,14 +1,29 @@
 <!-- templates/fragments/loginModal.html -->
-<div th:fragment="div">
-  <h2 class="text-xl font-bold mb-4">Login do Cliente</h2>
-  <form method="post" th:action="@{/login-cliente}" class="flex flex-col gap-3">
-    <input type="email" name="username" placeholder="Email" required class="p-2 border rounded" />
-    <input type="password" name="password" placeholder="Senha" required class="p-2 border rounded" />
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Entrar</button>
-  </form>
+<div id="modalLogin" th:fragment="div"
+     class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+  <div class="bg-white text-black p-6 rounded-lg shadow-lg relative w-[90%] max-w-md">
+    
+    <!-- Botão de fechar -->
+    <button onclick="fecharModalLogin()"
+            class="absolute text-2xl text-gray-500 top-2 right-2 hover:text-red-600">
+      &times;
+    </button>
 
-  <div th:if="${param.error}" class="text-red-600 mt-2">Email ou senha inválidos.</div>
-  <div th:if="${param.logout}" class="text-green-600 mt-2">Logout realizado com sucesso.</div>
+    <!-- Título -->
+    <h2 class="mb-4 text-xl font-bold">Login do Cliente</h2>
 
-  <a th:href="@{/clientes/new}" class="text-blue-600 hover:underline block mt-4">Cadastrar</a>
+    <!-- Formulário -->
+    <form method="post" th:action="@{/login-cliente}" class="flex flex-col gap-3">
+      <input type="email" name="username" placeholder="Email" required class="p-2 border rounded" />
+      <input type="password" name="password" placeholder="Senha" required class="p-2 border rounded" />
+      <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Entrar</button>
+    </form>
+
+    <!-- Mensagens -->
+    <div th:if="${param.error}" class="mt-2 text-red-600">Email ou senha inválidos.</div>
+    <div th:if="${param.logout}" class="mt-2 text-green-600">Logout realizado com sucesso.</div>
+
+    <!-- Link de cadastro -->
+    <a th:href="@{/clientes/new}" class="block mt-4 text-blue-600 hover:underline">Cadastrar</a>
+  </div>
 </div>

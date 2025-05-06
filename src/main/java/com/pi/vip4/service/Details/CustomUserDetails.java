@@ -1,28 +1,33 @@
 package com.pi.vip4.service.details;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import com.pi.vip4.model.User;
 import com.pi.vip4.model.User.Tipo;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
+
     private Long id;
     private String username;
     private String password;
-    private String nome; // Adicionado para armazenar o nome do usuário
-    private Tipo tipo; // Adicionado para armazenar o tipo do usuário
+    private String nome;
+    private Tipo tipo;
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
         this.id = user.getId();
-        this.username = user.getEmail(); // O e-mail será usado como username
+        this.username = user.getEmail(); // E-mail como username
         this.password = user.getSenha();
-        this.nome = user.getNome(); // Pegando o nome do usuário
-        this.tipo = user.getTipo(); // Pegando o tipo do usuário
-        this.authorities = Collections.emptyList(); // Evita erro se não houver authorities
+        this.nome = user.getNome();
+        this.tipo = user.getTipo();
+
+        // Corrigido: registra a role com prefixo ROLE_
+        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_" + tipo.name()));
     }
 
     public Long getId() {
@@ -30,15 +35,15 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public String getEmail() {
-        return username; // Método para obter o e-mail do usuário
+        return username;
     }
 
     public String getNome() {
-        return nome; // Método para obter o nome do usuário
+        return nome;
     }
 
     public Tipo getTipo() {
-        return tipo; // Método para obter o tipo do usuário
+        return tipo;
     }
 
     @Override

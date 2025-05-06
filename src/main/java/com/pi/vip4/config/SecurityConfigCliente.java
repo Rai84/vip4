@@ -1,5 +1,6 @@
 package com.pi.vip4.config;
 
+import com.pi.vip4.service.details.CustomClienteDetailsService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
@@ -9,51 +10,56 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.pi.vip4.service.details.CustomClienteDetailsService;
-
 import java.util.List;
 
 @Configuration
-@Order(1) // prioridade mais alta
+@Order(1)
 public class SecurityConfigCliente {
 
-    @Bean
-    public SecurityFilterChain clienteSecurityFilterChain(HttpSecurity http,
-            @Qualifier("clienteAuthenticationProvider") DaoAuthenticationProvider provider) throws Exception {
+        @Bean
+        public SecurityFilterChain clienteSecurityFilterChain(HttpSecurity http,
+                        @Qualifier("clienteAuthenticationProvider") DaoAuthenticationProvider provider)
+                        throws Exception {
 
-        AuthenticationManager authManager = new ProviderManager(List.of(provider));
+                AuthenticationManager authManager = new ProviderManager(List.of(provider));
 
-        http
-                .securityMatcher("/**")
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login-cliente", "/logout-cliente", "/clientes/new", "/css/**", "/js/**", "/enderecos-entrega/**")
-                        .permitAll()
-                        .requestMatchers("/cliente/area-restrita/**").hasRole("CLIENTE")
-                        .anyRequest().permitAll())
-                .formLogin(form -> form
-                        .loginPage("/login-cliente")
-                        .loginProcessingUrl("/login-cliente")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/login-cliente?error=true")
-                        .permitAll())
-                        .logout(logout -> logout
-                                .logoutUrl("/logout-cliente") // ou /logout-cliente, se for o seu caso
-                                .logoutSuccessUrl("/") // redireciona após logout
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
-                                )
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(
+                                                                "/", "/login-cliente", "/logout-cliente",
+                                                                "/clientes/**", "/enderecos-entrega/**",
+                                                                "/modal-login-cliente", "/produtos/**",
+                                                                "/css/**", "/js/**", "/images/**", "/error")
+                                                .permitAll()
+                                                .requestMatchers("/cliente/carrinho/**", "/modal-carrinho")
+                                                .hasRole("CLIENTE")
+                                                .requestMatchers("/cliente/area-restrita/**").hasRole("CLIENTE")
+                                                .anyRequest().permitAll())
+                                .formLogin(form -> form
+                                                .loginPage("/login-cliente")
+                                                .loginProcessingUrl("/login-cliente")
+                                                .defaultSuccessUrl("/", true)
+                                                .failureUrl("/login-cliente?error=true")
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout-cliente")
+                                                .logoutSuccessUrl("/")
+                                                .invalidateHttpSession(true)
+                                                .deleteCookies("JSESSIONID"))
+                                .sessionManagement(session -> session
+                                                .sessionFixation().newSession())
+                                .authenticationManager(authManager);
 
-                .authenticationManager(authManager);
+                return http.build();
+        }
 
-        return http.build();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider clienteAuthenticationProvider(CustomClienteDetailsService clienteService,
-            PasswordEncoder encoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(clienteService);
-        provider.setPasswordEncoder(encoder);
-        return provider;
-    }
+        @Bean
+        public DaoAuthenticationProvider clienteAuthenticationProvider(CustomClienteDetailsService clienteService,
+                        PasswordEncoder encoder) {
+                DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+                provider.setUserDetailsService(clienteService);
+                provider.setPasswordEncoder(encoder);
+                return provider;
+        }
 }

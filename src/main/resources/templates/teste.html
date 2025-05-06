@@ -7,15 +7,15 @@
   <link rel="stylesheet" th:href="@{/css/output.css}" />
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-stone-950 text-white">
+<body class="text-white bg-stone-950">
 
   <!-- Menu reutilizável -->
   <div th:replace="~{fragments/menup :: aside}"></div>
 
   <!-- Conteúdo Principal -->
-  <!--<h1 class="text-3xl font-semibold mb-6 pt-36"></h1>
+  <!--<h1 class="mb-6 text-3xl font-semibold pt-36"></h1>
    <div th:if="${userName != null}">
-  <h2 class="text-xl font-bold mb-2">Bem-vindo, <span th:text="${userName}"></span>!</h2>
+  <h2 class="mb-2 text-xl font-bold">Bem-vindo, <span th:text="${userName}"></span>!</h2>
   <p><strong>ID:</strong> <span th:text="${id}"></span></p>
   <p><strong>Email:</strong> <span th:text="${email}"></span></p>
   <p><strong>CPF:</strong> <span th:text="${cpf}"></span></p>
@@ -24,7 +24,7 @@
   <p><strong>Nascimento:</strong> <span th:text="${nascimento}"></span></p>
 
   <div th:if="${enderecoFaturamento != null}">
-  <h3 class="text-lg font-semibold mt-4 mb-2">Endereço de Faturamento</h3>
+  <h3 class="mt-4 mb-2 text-lg font-semibold">Endereço de Faturamento</h3>
   <p><strong>CEP:</strong> <span th:text="${enderecoFaturamento.cep}"></span></p>
   <p><strong>Rua:</strong> <span th:text="${enderecoFaturamento.logradouro}"></span></p>
   <p><strong>Número:</strong> <span th:text="${enderecoFaturamento.numero}"></span></p>
@@ -39,47 +39,63 @@
 </div>
 
   <!-- Lista de produtos -->
-  <div class="pt-28 px-8">
-    <h1 class="text-3xl font-semibold mb-6">Teste - Produtos</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <div th:each="produto : ${produtos}" class="bg-white text-black rounded-lg shadow p-4">
-        <img th:src="${produto.getImgUrls()[0]}" alt="Imagem do Produto"
-             class="h-72 w-full object-cover rounded mb-3" />
-        <h2 class="text-lg font-semibold" th:text="${produto.nomeProduto}">Nome</h2>
-        <p class="text-gray-600" th:text="'R$ ' + ${produto.preco}">Preço</p>
-        <div>
-          
-        </div>
+  <div class="px-8 pt-28">
+  <h1 class="mb-6 text-3xl font-semibold">Teste - Produtos</h1>
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
-        <button
-          class="mt-3 bg-blue-600 text-white px-4 py-2 rounded-full w-10 h-10 hover:bg-blue-700 flex items-center justify-center
-          relative bottom-32 left-64"
-          
-          th:data-nome="${produto.nomeProduto}"
-          th:data-preco="${produto.preco}"
-          th:data-imagem="${produto.getImgUrls()[0]}"
-          onclick="addToCart(this)">
-          <i class="bi bi-plus-lg"></i>
-        </button>
-        <a th:href="@{/{id}(id=${produto.idProduto})}" 
-          class="mt-3 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 block text-center">
-          Ver detalhes
-        </a>
+    <!-- Mostra apenas produtos com estoque > 0 e status = true -->
+    <div th:each="produto : ${produtos}" 
+         th:if="${produto.estoque > 0 and produto.status}" 
+         class="p-4 text-black bg-white rounded-lg shadow">
 
-      </div>
+      <img th:if="${!produto.getImgUrls().isEmpty()}"
+     th:src="@{${produto.getImgUrls()[0]}}"
+     alt="Imagem do Produto"
+     class="object-cover w-full mb-3 rounded h-72" />
 
+    <!-- Imagem padrão caso não tenha imagem -->
+    <img th:if="${produto.getImgUrls().isEmpty()}"
+     th:src="@{/images/placeholder.png}"
+     alt="Sem imagem"
+     class="object-cover w-full mb-3 rounded h-72" />
+
+      <h2 class="text-lg font-medium text-gray-700" th:text="${produto.nomeProduto}">Nome</h2>
+      <p class="text-gray-600" th:text="${produto.descricao}">Descrição</p>
+      <p class="text-black text-[20px] pt-2 font-medium" th:text="'R$ ' + ${produto.preco}">Preço</p>
+      
+
+      <button
+      class="relative flex items-center justify-center w-10 h-10 px-4 py-2 -mt-12 text-white bg-blue-600 rounded-full hover:bg-blue-700 bottom-28 left-64"
+      th:data-nome="${produto.nomeProduto}"
+      th:data-estoque="${produto.descricao}"
+      th:data-preco="${produto.preco}"
+      th:data-imagem="${produto.getImgUrls()[0]}"
+      th:onclick="${userName == null} ? 'abrirModalLogin()' : 'addToCart(this)'">
+      <i class="bi bi-plus-lg"></i>
+      </button>
+
+
+      <a th:href="@{'/produtos/' + ${produto.idProduto}}"
+         class="block px-4 py-2 mt-3 text-center text-white bg-blue-600 rounded hover:bg-blue-700">
+        Ver detalhes
+      </a>
     </div>
+    
   </div>
+</div>
+
+
 
   
 
 
   <!-- Modal do Carrinho -->
-  <div th:replace="~{fragments/carrinhoModal :: div}"></div>
+  <div id="modalCarrinhoContainer"></div>
 
   <!-- Modal de Login -->
-  <!-- <div th:replace="~{fragments/loginModal :: div}"></div> -->
+  <div id="modalClienteContainer"></div>
 
+  <!-- Modal de cliente logado -->
   <div id="modalClienteContainer"></div>
 
   <!-- Script JS -->

@@ -32,8 +32,9 @@ public class ProdutoService {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + id));
     }
 
+    // Agora usa EntityGraph para carregar imagens automaticamente
     public Page<Produto> listarProdutosPaginados(Pageable pageable) {
-        return produtoRepository.findAll(pageable);
+        return produtoRepository.buscarTodosComImagens(pageable);
     }
 
     private String salvarImagem(MultipartFile imagem, Long idProduto) throws IOException {
@@ -79,6 +80,7 @@ public class ProdutoService {
         produto.setEstoque(details.getEstoque());
         produto.setDescricao(details.getDescricao());
         produto.setAvaliacao(details.getAvaliacao());
+        produto.setStatus(details.getEstoque() > 0 && details.isStatus());
 
         if (imagem != null && !imagem.isEmpty()) {
             String imageUrl = salvarImagem(imagem, produto.getIdProduto());

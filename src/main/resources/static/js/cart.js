@@ -1,20 +1,37 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cartButton = document.getElementById("cartButton");
-    const cartModal = document.getElementById("cartModal");
-    const closeCart = document.getElementById("closeCart");
+    const modalContainer = document.getElementById("modalCarrinhoContainer");
 
-    if (!cartButton || !cartModal || !closeCart) {
-        console.error("Erro: Elementos do carrinho não encontrados!");
-        return;
-    }
+    if (!cartButton || !modalContainer) return;
 
     cartButton.addEventListener("click", function() {
-        console.log("Abrindo modal...");
-        cartModal.classList.remove("hidden");
-    });
+        fetch("/modal-carrinho")
+            .then(response => {
+                if (response.redirected) {
+                    // Foi redirecionado para o login-cliente
+                    window.location.href = response.url;
+                    return;
+                }
+                return response.text();
+            })
+            .then(html => {
+                if (html) {
+                    modalContainer.innerHTML = html;
+                    const cartModal = document.getElementById("cartModal");
+                    if (cartModal) {
+                        cartModal.classList.remove("hidden");
+                        cartModal.classList.add("flex");
 
-    closeCart.addEventListener("click", function() {
-        console.log("Fechando modal...");
-        cartModal.classList.add("hidden");
+                        // Reanexar evento do botão fechar após injetar HTML
+                        const closeBtn = document.getElementById("closeModalBtn");
+                        if (closeBtn) {
+                            closeBtn.addEventListener("click", () => {
+                                cartModal.classList.remove("flex");
+                                cartModal.classList.add("hidden");
+                            });
+                        }
+                    }
+                }
+            });
     });
 });
