@@ -1,5 +1,6 @@
 package com.pi.vip4.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -13,11 +14,13 @@ public class Carrinho {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    @JsonIgnore
     @NotNull
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
@@ -31,6 +34,9 @@ public class Carrinho {
     @Column(name = "total", nullable = false)
     private BigDecimal total;
 
+    @Column(name = "frete", nullable = false)
+    private Double frete = 0.0;
+
     @PrePersist
     @PreUpdate
     private void calcularTotal() {
@@ -39,7 +45,6 @@ public class Carrinho {
         }
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -62,7 +67,7 @@ public class Carrinho {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
-        calcularTotal(); // Atualiza o total ao definir o produto
+        calcularTotal(); // Recalcular sempre que o produto mudar
     }
 
     public Integer getQuantidade() {
@@ -71,21 +76,30 @@ public class Carrinho {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
-        calcularTotal(); // Atualiza o total ao definir a quantidade
+        calcularTotal(); // Recalcular sempre que a quantidade mudar
     }
 
     public BigDecimal getTotal() {
         return total;
     }
 
+    public Double getFrete() {
+        return frete;
+    }
+
+    public void setFrete(Double frete) {
+        this.frete = frete;
+    }
+
     @Override
     public String toString() {
         return "Carrinho{" +
                 "id=" + id +
-                ", cliente=" + cliente.getNome() +
-                ", produto=" + produto.getNomeProduto() +
+                ", cliente=" + (cliente != null ? cliente.getNome() : "null") +
+                ", produto=" + (produto != null ? produto.getNomeProduto() : "null") +
                 ", quantidade=" + quantidade +
                 ", total=" + total +
+                ", frete=" + frete +
                 '}';
     }
 }

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const botoesAbrir = document.querySelectorAll("#abrirModalCliente");
+  const botoesAbrir = document.querySelectorAll(".abrirModalCliente");
 
   botoesAbrir.forEach(botao => {
     botao.addEventListener("click", () => {

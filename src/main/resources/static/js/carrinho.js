@@ -1,88 +1,3 @@
-let totalCarrinho = 0;
-let freteSelecionado = 0;
-const cartItems = [];
-
-function addToCart(button) {
-  const nomeProduto = button.getAttribute("data-nome");
-  const precoProduto = parseFloat(button.getAttribute("data-preco").replace(",", "."));
-  const imgUrl = button.getAttribute("data-imagem");
-
-  const produtoExistente = cartItems.find(prod => prod.nome === nomeProduto);
-
-  if (produtoExistente) {
-    produtoExistente.quantidade++;
-  } else {
-    cartItems.push({ nome: nomeProduto, preco: precoProduto, imagem: imgUrl, quantidade: 1 });
-  }
-
-  totalCarrinho += precoProduto;
-  atualizarCarrinho();
-  atualizarTotalComFrete();
-}
-
-function atualizarCarrinho() {
-  const cartContent = document.getElementById("cartContent");
-  if (!cartContent) return;
-
-  cartContent.innerHTML = "";
-
-  cartItems.forEach(produto => {
-    const html = `
-      <div class="flex items-center space-x-4 mb-4">
-        <img src="${produto.imagem}" alt="${produto.nome}" class="w-16 h-16 object-cover rounded">
-        <div>
-          <p class="text-sm font-semibold">${produto.nome}</p>
-          <p class="text-gray-600">R$ ${produto.preco.toFixed(2)} x ${produto.quantidade} = <strong>R$ ${(produto.preco * produto.quantidade).toFixed(2)}</strong></p>
-        </div>
-        <div class="flex items-center space-x-2">
-          <button onclick="aumentarQuantidade('${produto.nome}')" class="px-2 py-1 bg-green-500 text-white rounded">+</button>
-          <button onclick="removerProduto('${produto.nome}')" class="px-2 py-1 bg-red-500 text-white rounded">-</button>
-        </div>
-      </div>
-    `;
-    cartContent.innerHTML += html;
-  });
-}
-
-function aumentarQuantidade(nome) {
-  const produto = cartItems.find(p => p.nome === nome);
-  if (produto) {
-    produto.quantidade++;
-    totalCarrinho += produto.preco;
-    atualizarCarrinho();
-    atualizarTotalComFrete();
-  }
-}
-
-function removerProduto(nome) {
-  const produto = cartItems.find(p => p.nome === nome);
-  if (produto) {
-    produto.quantidade--;
-    totalCarrinho -= produto.preco;
-    if (produto.quantidade === 0) {
-      const index = cartItems.indexOf(produto);
-      cartItems.splice(index, 1);
-    }
-    atualizarCarrinho();
-    atualizarTotalComFrete();
-  }
-}
-
-function atualizarTotalComFrete() {
-  const totalFinal = totalCarrinho + freteSelecionado;
-
-  const totalValor = document.getElementById("totalValor");
-  if (totalValor) totalValor.textContent = `Total: R$ ${totalFinal.toFixed(2)}`;
-
-  const topo = document.getElementById("totalCarrinhoModal");
-  if (topo) topo.textContent = `R$ ${totalFinal.toFixed(2)}`;
-}
-
-function selecionarFrete(valor) {
-  freteSelecionado = parseFloat(valor);
-  atualizarTotalComFrete();
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   const cartButton = document.getElementById("cartButton");
   const modalContainer = document.getElementById("modalCarrinhoContainer");
@@ -92,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cartButton.addEventListener("click", () => {
     fetch("/modal-carrinho")
       .then(response => {
-        // Detecta se foi redirecionado para o login do cliente
         if (response.redirected && response.url.includes("/login-cliente")) {
           return fetch("/modal-login-cliente")
             .then(r => r.text())
@@ -100,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
               const loginContainer = document.getElementById("modalClienteContainer");
               if (loginContainer) {
                 loginContainer.innerHTML = html;
-
                 const loginModal = document.getElementById("modalLogin");
                 if (loginModal) {
                   loginModal.classList.remove("hidden");
@@ -109,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
               }
             });
         }
-
         return response.text();
       })
       .then(html => {
@@ -137,10 +49,145 @@ document.addEventListener("DOMContentLoaded", () => {
               cartModal.classList.add("hidden");
             }
           });
-
-          atualizarCarrinho();
-          atualizarTotalComFrete();
         }
       });
   });
 });
+
+// ✅ Envia produto para o carrinho
+async function enviarProdutoParaCarrinho(botao) {
+  const produtoId = botao.getAttribute("data-id");
+  const clienteId = localStorage.getItem("clienteId");
+  const quantidade = 1;
+
+  if (!clienteId) {
+    abrirModalLogin();
+    return;
+  }
+
+  try {
+    const response = await fetch(`/api/carrinho/adicionar?clienteId=${clienteId}&produtoId=${produtoId}&quantidade=${quantidade}`, {
+      method: "POST"
+    });
+
+    if (response.ok) {
+      const carrinhoItem = await response.json();
+      alert("Produto adicionado ao carrinho!");
+
+      fetch("/modal-carrinho")
+        .then(r => r.text())
+        .then(html => {
+          const modalContainer = document.getElementById("modalCarrinhoContainer");
+          modalContainer.innerHTML = html;
+          const cartModal = document.getElementById("cartModal");
+          if (cartModal) {
+            cartModal.classList.remove("hidden");
+            cartModal.classList.add("flex");
+          }
+        });
+    } else {
+      const erro = await response.text();
+      alert("Erro ao adicionar produto: " + erro);
+    }
+  } catch (error) {
+    alert("Erro ao enviar produto.");
+  }
+}
+
+// ✅ Remove um item do carrinho
+async function removerItem(itemId) {
+  try {
+    const response = await fetch(`/api/carrinho/remover?id=${itemId}`, {
+      method: "DELETE"
+    });
+
+    if (response.ok) {
+      alert("Item removido do carrinho!");
+      fetch("/modal-carrinho")
+        .then(r => r.text())
+        .then(html => {
+          const modalContainer = document.getElementById("modalCarrinhoContainer");
+          modalContainer.innerHTML = html;
+          const cartModal = document.getElementById("cartModal");
+          if (cartModal) {
+            cartModal.classList.remove("hidden");
+            cartModal.classList.add("flex");
+          }
+        });
+    } else {
+      const erro = await response.text();
+      alert("Erro ao remover item: " + erro);
+    }
+  } catch (error) {
+    alert("Erro na requisição para remover item.");
+  }
+}
+
+// ✅ Altera quantidade de item
+async function alterarQuantidade(id, novaQuantidade) {
+  try {
+    const response = await fetch(`/api/carrinho/atualizar?id=${id}&quantidade=${novaQuantidade}`, {
+      method: "PATCH"
+    });
+
+    if (response.ok) {
+      fetch("/modal-carrinho")
+        .then(r => r.text())
+        .then(html => {
+          const modalContainer = document.getElementById("modalCarrinhoContainer");
+          modalContainer.innerHTML = html;
+          const cartModal = document.getElementById("cartModal");
+          if (cartModal) {
+            cartModal.classList.remove("hidden");
+            cartModal.classList.add("flex");
+          }
+        });
+    } else {
+      const erro = await response.text();
+      alert("Erro ao atualizar: " + erro);
+    }
+  } catch (e) {
+    alert("Erro na requisição de quantidade.");
+  }
+}
+
+// ✅ Seleciona frete e atualiza valor no banco
+function selecionarFrete(valorFrete) {
+  const clienteId = localStorage.getItem("clienteId");
+  if (!clienteId) return;
+
+  fetch(`/api/carrinho/frete?clienteId=${clienteId}&valor=${parseFloat(valorFrete)}`, {
+    method: "PATCH"
+  }).then(() => {
+    fetch("/modal-carrinho")
+      .then(r => r.text())
+      .then(html => {
+        const modalContainer = document.getElementById("modalCarrinhoContainer");
+        modalContainer.innerHTML = html;
+        const cartModal = document.getElementById("cartModal");
+        if (cartModal) {
+          cartModal.classList.remove("hidden");
+          cartModal.classList.add("flex");
+        }
+
+        // ✅ Atualiza valor total no menu
+        atualizarTotalMenu(clienteId);
+      });
+  });
+}
+
+
+function atualizarTotalMenu(clienteId) {
+  const spanTotal = document.getElementById("totalCarrinhoModal");
+  if (!clienteId || !spanTotal) return;
+
+  fetch(`/api/carrinho/total?clienteId=${clienteId}`)
+    .then(r => r.json())
+    .then(total => {
+      const formatado = total.toFixed(2).replace('.', ',');
+      spanTotal.textContent = `R$ ${formatado}`;
+    });
+}
+
+
+

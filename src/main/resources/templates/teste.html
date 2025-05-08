@@ -12,6 +12,15 @@
   <!-- Menu reutilizável -->
   <div th:replace="~{fragments/menup :: aside}"></div>
 
+  <script th:inline="javascript">
+  /*<![CDATA[*/
+  localStorage.setItem("clienteId", '[[${id}]]');
+  /*]]>*/
+  </script>
+
+  <p><strong>ID:</strong> <span th:text="${id}"></span></p>
+
+
   <!-- Conteúdo Principal -->
   <!--<h1 class="mb-6 text-3xl font-semibold pt-36"></h1>
    <div th:if="${userName != null}">
@@ -70,12 +79,14 @@
       th:data-estoque="${produto.descricao}"
       th:data-preco="${produto.preco}"
       th:data-imagem="${produto.getImgUrls()[0]}"
-      th:onclick="${userName == null} ? 'abrirModalLogin()' : 'addToCart(this)'">
+      th:data-id="${produto.id}"
+      th:onclick="${userName == null} ? 'abrirModalLogin()' : 'enviarProdutoParaCarrinho(this)'">
       <i class="bi bi-plus-lg"></i>
       </button>
 
 
-      <a th:href="@{'/produtos/' + ${produto.idProduto}}"
+
+      <a th:href="@{'/produtos/' + ${produto.id}}"
          class="block px-4 py-2 mt-3 text-center text-white bg-blue-600 rounded hover:bg-blue-700">
         Ver detalhes
       </a>
@@ -96,7 +107,6 @@
   <div id="modalClienteContainer"></div>
 
   <!-- Modal de cliente logado -->
-  <div id="modalClienteContainer"></div>
 
   <!-- Script JS -->
   <script th:src="@{/js/carrinho.js}"></script>

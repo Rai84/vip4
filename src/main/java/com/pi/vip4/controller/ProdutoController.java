@@ -30,12 +30,11 @@ public class ProdutoController {
   @Autowired
   private ImgProdutoRepository imgProdutoRepository;
 
-  // ✅ Lista os produtos com imagens (já resolvido com EntityGraph no service)
   @GetMapping
   public String getAllProdutos(Model model, @RequestParam(defaultValue = "0") int page) {
     Page<Produto> produtosPage = produtoService.listarProdutosPaginados(PageRequest.of(page, 10));
     model.addAttribute("produtos", produtosPage.getContent());
-    model.addAttribute("produtosPage", produtosPage); // necessário para paginação
+    model.addAttribute("produtosPage", produtosPage);
     return "list-produto";
   }
 
@@ -43,7 +42,7 @@ public class ProdutoController {
   public String getProduto(@PathVariable Long idProduto, Model model) {
     Produto produto = produtoService.buscarPorId(idProduto);
     model.addAttribute("produto", produto);
-    model.addAttribute("imagens", produto.getImagens()); // útil para mostrar várias imagens
+    model.addAttribute("imagens", produto.getImagens());
     return "produto-detalhes";
   }
 
@@ -64,7 +63,7 @@ public class ProdutoController {
   public String showUpdateProdutoForm(@PathVariable("id") Long produtoId, Model model) throws Exception {
     Produto produto = produtoService.buscarPorId(produtoId);
     model.addAttribute("produto", produto);
-    model.addAttribute("imagens", produto.getImagens()); // útil para exibir as imagens no form de edição
+    model.addAttribute("imagens", produto.getImagens());
     return "edit-produto-form";
   }
 
@@ -87,7 +86,7 @@ public class ProdutoController {
     ImgProduto img = imgProdutoRepository.findById(imgId).orElse(null);
 
     if (img != null) {
-      Long produtoId = img.getProduto().getIdProduto(); // pega o id antes de deletar a imagem
+      Long produtoId = img.getProduto().getId(); // ✅ atualizado de getIdProduto() para getId()
       File file = new File("src/main/resources/static" + img.getImagemUrl());
       if (file.exists())
         file.delete();

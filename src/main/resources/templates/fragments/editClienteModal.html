@@ -1,60 +1,65 @@
 <!-- templates/fragments/editClienteModal.html -->
-<div th:fragment="div">
-  <h2 class="text-2xl font-bold mb-6 text-center text-white">Editar Meus Dados</h2>
+<div id="modalEditarCliente" th:fragment="modalEditarCliente"
+     class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-60">
+  <div class="relative w-full max-w-2xl p-6 text-white rounded-lg shadow-lg bg-neutral-900">
+    <button id="fecharModalEditarCliente" class="absolute text-xl font-bold text-gray-300 top-2 right-2 hover:text-red-500">&times;</button>
 
-  <form th:action="@{'/clientes/update/' + ${cliente.id}}" method="post" th:object="${cliente}" class="flex flex-col gap-2 text-sm text-white">
+    <h2 class="mb-6 text-2xl font-bold text-center text-white">Editar Meus Dados</h2>
 
-    <!-- Dados Pessoais -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <input type="text" th:field="*{nome}" placeholder="Nome" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{cpf}" placeholder="CPF" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="email" th:field="*{email}" placeholder="Email" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{telefone}" placeholder="Telefone" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{genero}" placeholder="Gênero" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="date" th:field="*{dataNascimento}" placeholder="Nascimento" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-    </div>
+    <form th:action="@{'/clientes/update/' + ${cliente.id}}" method="post" th:object="${cliente}" class="flex flex-col gap-2 text-sm text-white">
 
-    <!-- Endereço de Faturamento -->
-    <h3 class="text-lg font-semibold mt-2 mb-2 text-white">Endereço de Faturamento</h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-      <input type="text" th:field="*{enderecoFaturamento.cep}" placeholder="CEP" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.logradouro}" placeholder="Logradouro" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.numero}" placeholder="Número" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.complemento}" placeholder="Complemento" class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.bairro}" placeholder="Bairro" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.cidade}" placeholder="Cidade" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-      <input type="text" th:field="*{enderecoFaturamento.uf}" placeholder="UF" maxlength="2" required class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500 uppercase" />
-    </div>
+      <!-- Dados Pessoais -->
+      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <input type="text" th:field="*{nome}" placeholder="Nome" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{cpf}" placeholder="CPF" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="email" th:field="*{email}" placeholder="Email" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{telefone}" placeholder="Telefone" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{genero}" placeholder="Gênero" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="date" th:field="*{dataNascimento}" placeholder="Nascimento" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+      </div>
 
-    <!-- Senhas -->
-    <h3 class="text-lg font-semibold mt-2 mb-2 text-white">Segurança</h3>
-    <input type="password" th:field="*{senha}" id="senha" placeholder="Senha" class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-    <input type="password" id="confirmaSenha" placeholder="Confirmar Nova Senha" class="p-2 rounded bg-neutral-800 border border-gray-600 focus:ring-2 focus:ring-blue-500" />
-    <p id="erroSenha" class="text-red-500 text-sm hidden">As senhas não coincidem. Tente novamente.</p>
+      <!-- Endereço de Faturamento -->
+      <h3 class="mt-2 mb-2 text-lg font-semibold text-white">Endereço de Faturamento</h3>
+      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <input type="text" th:field="*{enderecoFaturamento.cep}" placeholder="CEP" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.logradouro}" placeholder="Logradouro" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.numero}" placeholder="Número" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.complemento}" placeholder="Complemento" class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.bairro}" placeholder="Bairro" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.cidade}" placeholder="Cidade" required class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+        <input type="text" th:field="*{enderecoFaturamento.uf}" placeholder="UF" maxlength="2" required class="p-2 uppercase border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+      </div>
 
-    <!-- Botão -->
-    <button type="submit" id="btnSubmit"
-      class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors mt-2">
-      Salvar Alterações
-    </button>
-  </form>
+      <!-- Senhas -->
+      <h3 class="mt-2 mb-2 text-lg font-semibold text-white">Segurança</h3>
+      <input type="password" th:field="*{senha}" id="senha" placeholder="Senha" class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+      <input type="password" id="confirmaSenha" placeholder="Confirmar Nova Senha" class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+      <p id="erroSenha" class="hidden text-sm text-red-500">As senhas não coincidem. Tente novamente.</p>
 
-  <script>
-    const senha = document.getElementById("senha");
-    const confirmaSenha = document.getElementById("confirmaSenha");
-    const erroSenha = document.getElementById("erroSenha");
-    const btnSubmit = document.getElementById("btnSubmit");
+      <!-- Botão -->
+      <button type="submit" id="btnSubmit"
+        class="w-full py-2 mt-2 text-white transition-colors bg-blue-600 rounded hover:bg-blue-700">
+        Salvar Alterações
+      </button>
+    </form>
 
-    if (confirmaSenha) {
-      confirmaSenha.addEventListener("input", function () {
-        if (senha.value !== confirmaSenha.value) {
-          erroSenha.classList.remove("hidden");
-          btnSubmit.disabled = true;
-        } else {
-          erroSenha.classList.add("hidden");
-          btnSubmit.disabled = false;
-        }
-      });
-    }
-  </script>
+    <script>
+      const senha = document.getElementById("senha");
+      const confirmaSenha = document.getElementById("confirmaSenha");
+      const erroSenha = document.getElementById("erroSenha");
+      const btnSubmit = document.getElementById("btnSubmit");
+
+      if (confirmaSenha) {
+        confirmaSenha.addEventListener("input", function () {
+          if (senha.value !== confirmaSenha.value) {
+            erroSenha.classList.remove("hidden");
+            btnSubmit.disabled = true;
+          } else {
+            erroSenha.classList.add("hidden");
+            btnSubmit.disabled = false;
+          }
+        });
+      }
+    </script>
+  </div>
 </div>

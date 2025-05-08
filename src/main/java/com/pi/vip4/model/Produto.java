@@ -14,7 +14,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idProduto;
+    private Long id;
 
     @NotNull
     @Size(max = 200)
@@ -40,19 +40,18 @@ public class Produto {
     private Double avaliacao;
 
     @Column(name = "status", nullable = false)
-    private boolean status; // Ativo ou inativo
+    private boolean status;
 
-    // Relacionamento com a tabela de imagens
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<ImgProduto> imagens;
 
-    // Getters and Setters
-    public Long getIdProduto() {
-        return idProduto;
+    // ✅ Getters e Setters atualizados
+    public Long getId() {
+        return id;
     }
 
-    public void setIdProduto(Long idProduto) {
-        this.idProduto = idProduto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomeProduto() {
@@ -113,7 +112,7 @@ public class Produto {
 
     public List<String> getImgUrls() {
         if (imagens == null) {
-            return List.of(); // Retorna uma lista vazia para evitar NullPointerException
+            return List.of();
         }
         return imagens.stream()
                 .map(ImgProduto::getImagemUrl)
@@ -123,7 +122,7 @@ public class Produto {
     @Override
     public String toString() {
         return "Produto{" +
-                "idProduto=" + idProduto +
+                "id=" + id +
                 ", nomeProduto='" + nomeProduto + '\'' +
                 ", preco=" + preco +
                 ", estoque=" + estoque +

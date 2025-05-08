@@ -10,7 +10,7 @@
 <body class="flex items-center justify-center min-h-screen text-white bg-stone-950">
     <div class="grid h-screen w-full grid-cols-[50px_1fr_50px] grid-rows-[30px_1fr_30px] gap-x-[25rem]">
         <div class="col-start-2 col-end-3 row-start-2 row-end-3 p-6 rounded-lg bg-neutral-900">
-            <form action="#" th:action="@{/produtos/update/{id}(id=${produto.idProduto})}" method="post" enctype="multipart/form-data">
+            <form action="#" th:action="@{/produtos/update/{id}(id=${produto.id})}" method="post" enctype="multipart/form-data">
                 <div class="h-full grid grid-cols-[10rem_1fr] grid-rows-[repeat(9,55px)] gap-3.5">
                 <div class="grid gap-y-[1rem] justify-items-center">
                     <h3>Imagem Atual:</h3>

@@ -32,7 +32,6 @@ public class ProdutoService {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + id));
     }
 
-    // Agora usa EntityGraph para carregar imagens automaticamente
     public Page<Produto> listarProdutosPaginados(Pageable pageable) {
         return produtoRepository.buscarTodosComImagens(pageable);
     }
@@ -58,7 +57,7 @@ public class ProdutoService {
         try {
             produtoRepository.save(produto);
             if (!imagem.isEmpty()) {
-                String imageUrl = salvarImagem(imagem, produto.getIdProduto());
+                String imageUrl = salvarImagem(imagem, produto.getId());
                 ImgProduto img = new ImgProduto(produto, imageUrl);
                 imgProdutoRepository.save(img);
             }
@@ -83,7 +82,7 @@ public class ProdutoService {
         produto.setStatus(details.getEstoque() > 0 && details.isStatus());
 
         if (imagem != null && !imagem.isEmpty()) {
-            String imageUrl = salvarImagem(imagem, produto.getIdProduto());
+            String imageUrl = salvarImagem(imagem, produto.getId());
             ImgProduto img = new ImgProduto(produto, imageUrl);
             imgProdutoRepository.save(img);
         }
@@ -120,7 +119,7 @@ public class ProdutoService {
                 file.delete();
             imgProdutoRepository.delete(img);
             redirectAttributes.addFlashAttribute("message", "Imagem removida com sucesso!");
-            return "redirect:/produtos/edit/" + img.getProduto().getIdProduto();
+            return "redirect:/produtos/edit/" + img.getProduto().getId();
         } else {
             redirectAttributes.addFlashAttribute("error", "Imagem não encontrada!");
             return "redirect:/produtos";
