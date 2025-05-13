@@ -3,6 +3,9 @@ package com.pi.vip4.controller;
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoFaturamento;
 import com.pi.vip4.service.ClienteService;
+import com.pi.vip4.service.details.CustomClienteDetails;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,14 +13,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 @Controller
-@RequestMapping("/clientes")
+@RequestMapping("/cliente")
 @Validated
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @GetMapping("/login-sucesso")
+    public String loginSucesso(HttpSession session, Authentication authentication) {
+        CustomClienteDetails clienteDetails = (CustomClienteDetails) authentication.getPrincipal();
+        session.setAttribute("clienteId", clienteDetails.getId());
+        return "redirect:/"; // ou outra página inicial do cliente
+    }
+
 
     @GetMapping
     public String getAllClientes(Model model, @RequestParam(defaultValue = "0") int page) {

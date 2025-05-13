@@ -1,5 +1,6 @@
 package com.pi.vip4.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,6 +25,7 @@ public class EnderecoFaturamento {
     private String cidade;
 
     @NotBlank
+    @Column(length = 2)
     private String uf;
 
     // Getters e Setters

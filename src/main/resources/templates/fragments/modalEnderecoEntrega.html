@@ -1,0 +1,40 @@
+<!-- fragments/modalEnderecoEntrega.html -->
+<div id="modalEnderecoEntrega" th:fragment="modalEnderecoEntrega" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+  <div class="relative w-11/12 max-w-xl p-6 text-black bg-white rounded-lg shadow-lg">
+    <button onclick="fecharModalEnderecoEntrega()" class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-red-500">&times;</button>
+
+    <h2 class="mb-4 text-xl font-bold">Meus Endereços</h2>
+
+    <button onclick="abrirModalFormEnderecoEntrega()"
+        class="px-4 py-2 mb-4 text-white bg-blue-600 rounded hover:bg-blue-700">
+        + Novo Endereço
+    </button>
+
+
+    <div class="space-y-4 overflow-y-auto max-h-96">
+      <div th:each="endereco : ${enderecos}" class="p-4 bg-gray-100 border rounded">
+        <p><strong>Endereço:</strong> <span th:text="${endereco.logradouro + ', ' + endereco.numero}"></span></p>
+        <p><strong>Bairro:</strong> <span th:text="${endereco.bairro}"></span></p>
+        <p><strong>Cidade:</strong> <span th:text="${endereco.cidade}"></span> - <span th:text="${endereco.uf}"></span></p>
+        <p><strong>CEP:</strong> <span th:text="${endereco.cep}"></span></p>
+        <p><strong>Complemento:</strong> <span th:text="${endereco.complemento} ?: '---'"></span></p>
+
+        <div class="flex gap-2 mt-3">
+            
+
+
+          <a th:href="@{'/cliente/enderecos-entrega/delete/' + ${endereco.id}}" class="px-3 py-1 text-white bg-red-600 rounded hover:bg-red-700">Remover</a>
+          <form th:action="@{'/cliente/enderecos-entrega/padrao/' + ${endereco.id}}" method="post">
+            <button onclick="abrirModalEdicaoEndereco('[[${endereco.id}]]')"
+                class="px-3 py-1 text-white bg-yellow-600 rounded hover:bg-yellow-700">
+                Editar
+            </button>
+            <button type="submit" class="px-3 py-1 text-white bg-green-600 rounded hover:bg-green-700"
+              th:if="${!endereco.padrao}">Definir como Padrão</button>
+            <span th:if="${endereco.padrao}" class="ml-2 font-semibold text-green-700">Endereço Padrão</span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

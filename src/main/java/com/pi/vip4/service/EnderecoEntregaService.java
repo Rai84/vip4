@@ -2,7 +2,6 @@ package com.pi.vip4.service;
 
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoEntrega;
-import com.pi.vip4.repository.ClienteRepository;
 import com.pi.vip4.repository.EnderecoEntregaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,38 +14,32 @@ public class EnderecoEntregaService {
     @Autowired
     private EnderecoEntregaRepository enderecoEntregaRepository;
 
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    public List<EnderecoEntrega> listarEnderecosDoCliente(Long clienteId) throws Exception {
-        Cliente cliente = clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new Exception("Cliente não encontrado: " + clienteId));
-        return cliente.getEnderecosEntrega();
+    public List<EnderecoEntrega> listarPorCliente(Cliente cliente) {
+        return enderecoEntregaRepository.findByCliente(cliente);
     }
 
-    public EnderecoEntrega novoEnderecoParaCliente(Long clienteId) {
-        EnderecoEntrega endereco = new EnderecoEntrega();
-        Cliente cliente = new Cliente();
-        cliente.setId(clienteId);
-        endereco.setCliente(cliente);
-        return endereco;
+    public EnderecoEntrega salvar(EnderecoEntrega endereco) {
+        return enderecoEntregaRepository.save(endereco);
     }
 
-    public Long salvarEndereco(EnderecoEntrega enderecoEntrega) {
-        EnderecoEntrega salvo = enderecoEntregaRepository.save(enderecoEntrega);
-        return salvo.getCliente().getId();
+    public void remover(Long id) {
+        enderecoEntregaRepository.deleteById(id);
     }
 
-    public EnderecoEntrega buscarEnderecoPorId(Long id) throws Exception {
+    public void definirComoPadrao(EnderecoEntrega endereco) {
+        Cliente cliente = endereco.getCliente();
+        // Zera o "padrao" de todos os outros do cliente
+        List<EnderecoEntrega> enderecos = enderecoEntregaRepository.findByCliente(cliente);
+        for (EnderecoEntrega e : enderecos) {
+            e.setPadrao(false);
+        }
+        endereco.setPadrao(true);
+        enderecos.add(endereco);
+        enderecoEntregaRepository.saveAll(enderecos);
+    }
+
+    public EnderecoEntrega buscarPorId(Long id) {
         return enderecoEntregaRepository.findById(id)
-                .orElseThrow(() -> new Exception("Endereço não encontrado: " + id));
-    }
-
-    public Long excluirEndereco(Long id) throws Exception {
-        EnderecoEntrega endereco = enderecoEntregaRepository.findById(id)
-                .orElseThrow(() -> new Exception("Endereço não encontrado: " + id));
-        Long clienteId = endereco.getCliente().getId();
-        enderecoEntregaRepository.delete(endereco);
-        return clienteId;
+                .orElseThrow(() -> new RuntimeException("Endereço não encontrado: " + id));
     }
 }

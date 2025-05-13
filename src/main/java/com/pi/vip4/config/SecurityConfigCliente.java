@@ -30,16 +30,17 @@ public class SecurityConfigCliente {
                                                                 "/", "/login-cliente", "/logout-cliente",
                                                                 "/clientes/**", "/enderecos-entrega/**",
                                                                 "/modal-login-cliente", "/produtos/**",
+                                                                "/cliente/login-sucesso", // ✅ nova rota liberada
                                                                 "/css/**", "/js/**", "/images/**", "/error")
                                                 .permitAll()
-                                                .requestMatchers("/cliente/carrinho/**", "/modal-carrinho")
-                                                .hasRole("CLIENTE")
-                                                .requestMatchers("/cliente/area-restrita/**").hasRole("CLIENTE")
+                                                .requestMatchers("/cliente/**").hasRole("CLIENTE") // protege tudo de
+                                                                                                   // cliente
                                                 .anyRequest().permitAll())
                                 .formLogin(form -> form
                                                 .loginPage("/login-cliente")
                                                 .loginProcessingUrl("/login-cliente")
-                                                .defaultSuccessUrl("/", true)
+                                                .defaultSuccessUrl("/cliente/login-sucesso", true) // ✅ redireciona após
+                                                                                                   // login
                                                 .failureUrl("/login-cliente?error=true")
                                                 .permitAll())
                                 .logout(logout -> logout

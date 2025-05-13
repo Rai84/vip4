@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CarrinhoService {
@@ -99,6 +100,31 @@ public class CarrinhoService {
                 .orElse(0.0);
 
         return subtotal + frete;
+    }
+
+    // Novo: método alternativo com nome mais genérico
+    public List<Carrinho> listarPorClienteId(Long clienteId) {
+        return carrinhoRepository.findByClienteId(clienteId);
+    }
+
+    // Novo: calcular subtotal apenas dos itens (sem frete)
+    public java.math.BigDecimal calcularSubtotal(List<Carrinho> itens) {
+        return itens.stream()
+                .map(Carrinho::getTotal)
+                .reduce(java.math.BigDecimal.ZERO, java.math.BigDecimal::add);
+    }
+
+    // Novo: pegar frete atual do primeiro item (já segue sua lógica existente)
+    public double obterFreteAtual(Long clienteId) {
+        return carrinhoRepository.findByClienteId(clienteId).stream()
+                .findFirst()
+                .map(c -> c.getFrete() != null ? c.getFrete() : 0.0)
+                .orElse(0.0);
+    }
+
+    @Transactional
+    public void limparCarrinhoPorCliente(Long clienteId) {
+        carrinhoRepository.deleteByClienteId(clienteId);
     }
 
 }

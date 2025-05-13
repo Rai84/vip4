@@ -1,0 +1,35 @@
+<!-- templates/listaPedidos.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Pedidos</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body class="p-8 text-black bg-gray-50">
+    <h1 class="mb-6 text-3xl font-bold">Meus Pedidos</h1>
+
+    <table class="w-full bg-white border border-collapse border-gray-300 table-auto">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2 border">Número</th>
+                <th class="px-4 py-2 border">Data</th>
+                <th class="px-4 py-2 border">Status</th>
+                <th class="px-4 py-2 border">Total</th>
+                <th class="px-4 py-2 border">Detalhes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td class="px-4 py-2 border" th:text="${pedido.numeroPedido}">123ABC</td>
+                <td class="px-4 py-2 border" th:text="${#temporals.format(pedido.dataCriacao, 'dd/MM/yyyy')}">01/01/2025</td>
+                <td class="px-4 py-2 border" th:text="${pedido.status}">AGUARDANDO_PAGAMENTO</td>
+                <td class="px-4 py-2 border" th:text="'R$ ' + ${pedido.valorTotal}">R$ 0,00</td>
+                <td class="px-4 py-2 border">
+                    <a th:href="@{'/pedidos/' + ${pedido.id}}" class="text-blue-600 underline">Ver</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

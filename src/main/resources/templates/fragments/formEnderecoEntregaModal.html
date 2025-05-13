@@ -1,0 +1,45 @@
+<!-- fragments/formEnderecoEntregaModal.html -->
+<div id="modalFormEnderecoEntrega" th:fragment="formEnderecoEntregaModal"
+     class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-60">
+  <div class="relative w-full max-w-2xl p-6 text-white rounded-lg shadow-lg bg-neutral-900">
+    <button id="fecharModalFormEnderecoEntrega" class="absolute text-xl font-bold text-gray-300 top-2 right-2 hover:text-red-500">
+      &times;
+    </button>
+
+    <h2 class="mb-4 text-2xl font-bold text-center">Endereço de Entrega</h2>
+
+    <form th:action="@{/cliente/enderecos-entrega/save}" method="post" th:object="${endereco}"
+          class="grid grid-cols-1 gap-3 text-sm sm:grid-cols-2">
+
+      <input type="hidden" th:field="*{id}" />
+
+      <input type="text" th:field="*{cep}" placeholder="CEP" required
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{logradouro}" placeholder="Logradouro" required
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{numero}" placeholder="Número" required
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{complemento}" placeholder="Complemento"
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{bairro}" placeholder="Bairro" required
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{cidade}" placeholder="Cidade" required
+             class="p-2 border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <input type="text" th:field="*{uf}" placeholder="UF" maxlength="2" required
+             class="p-2 uppercase border border-gray-600 rounded bg-neutral-800 focus:ring-2 focus:ring-blue-500" />
+
+      <div class="sm:col-span-2">
+        <button type="submit"
+                class="w-full py-2 mt-2 text-white transition-colors bg-blue-600 rounded hover:bg-blue-700">
+          Salvar Endereço
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

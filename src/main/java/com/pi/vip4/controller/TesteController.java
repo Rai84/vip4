@@ -1,6 +1,7 @@
 package com.pi.vip4.controller;
 
 import com.pi.vip4.model.Cliente;
+import com.pi.vip4.model.EnderecoEntrega;
 import com.pi.vip4.model.Carrinho;
 import com.pi.vip4.repository.ClienteRepository;
 import com.pi.vip4.service.CarrinhoService;
@@ -28,6 +29,9 @@ public class TesteController {
     @GetMapping("/")
     public String showAllProdutos(Model model, Authentication authentication) {
         testeService.carregarTelaInicial(model, authentication);
+
+        model.addAttribute("endereco", new EnderecoEntrega());
+
         return "teste";
     }
 

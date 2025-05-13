@@ -48,13 +48,19 @@
     <!-- Botões -->
     <div class="flex justify-between mt-6">
       <button class="px-4 py-2 text-white bg-red-500 rounded"
-              onclick="document.getElementById('cartModal').classList.add('hidden')">Fechar</button>
+        onclick="document.getElementById('cartModal').classList.add('hidden')">Fechar
+      </button>
 
       <button class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
-              onclick="finalizarPedido()">Finalizar Pedido</button>
+        onclick="abrirModalCheckout()">
+        Finalizar Pedido
+      </button>
+
     </div>
 
     <!-- Botão no canto para fechar -->
     <button id="closeModalBtn" class="absolute text-xl font-bold text-gray-500 top-2 right-2 hover:text-red-500">&times;</button>
   </div>
 </div>
+
+

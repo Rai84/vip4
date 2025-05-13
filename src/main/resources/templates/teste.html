@@ -106,13 +106,28 @@
   <!-- Modal de Login -->
   <div id="modalClienteContainer"></div>
 
-  <!-- Modal de cliente logado -->
+  <!-- Modal de listagem de endereços -->
+  <div th:replace="~{fragments/modalEnderecoEntrega :: modalEnderecoEntrega}"></div>
+  
+  <!-- Modal de formulário (adicionar/editar) -->
+  <div th:replace="~{fragments/formEnderecoEntregaModal :: formEnderecoEntregaModal}"></div>
+
+  <!-- container vazio que será sobrescrito com fetch -->
+  <div id="modalFormEnderecoEntrega"></div>
+
+  <!-- menup.html -->
+  <div id="modalCheckoutContainer"></div>
+
+
 
   <!-- Script JS -->
   <script th:src="@{/js/carrinho.js}"></script>
   <script th:src="@{/js/login.js}"></script>
   <script th:src="@{/js/modalCliente.js}"></script>
   <script th:src="@{/js/teste.js}"></script>
+  <script th:src="@{/js/enderecoEntrega.js}"></script>
+  <script th:src="@{/js/confirmarPedido.js}"></script>
+
 
 </body>
 </html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Endereço de Entrega</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="text-white bg-stone-950">
+  <div class="max-w-xl p-6 mx-auto">
+    <h2 class="mb-4 text-2xl font-semibold" th:text="${endereco.id == null} ? 'Novo Endereço' : 'Editar Endereço'"></h2>
+
+    <form th:action="@{/enderecos-entrega/save}" th:object="${endereco}" method="post" class="space-y-4">
+      <input type="hidden" th:field="*{id}" />
+      <input type="hidden" th:field="*{cliente.id}" />
+
+      <div>
+        <label class="block text-sm">CEP</label>
+        <input type="text" th:field="*{cep}" required class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">Logradouro</label>
+        <input type="text" th:field="*{logradouro}" required class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">Número</label>
+        <input type="text" th:field="*{numero}" required class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">Complemento</label>
+        <input type="text" th:field="*{complemento}" class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">Bairro</label>
+        <input type="text" th:field="*{bairro}" required class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">Cidade</label>
+        <input type="text" th:field="*{cidade}" required class="w-full p-2 border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div>
+        <label class="block text-sm">UF</label>
+        <input type="text" th:field="*{uf}" maxlength="2" required class="w-full p-2 uppercase border border-gray-600 rounded bg-neutral-800" />
+      </div>
+
+      <div class="flex items-center">
+        <input type="checkbox" th:field="*{padrao}" class="mr-2">
+        <label>Endereço Padrão</label>
+      </div>
+
+      <div>
+        <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Salvar</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

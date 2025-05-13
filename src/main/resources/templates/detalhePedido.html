@@ -1,0 +1,47 @@
+<!-- templates/detalhePedido.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Pedido</title>
+    <link rel="stylesheet" th:href="@{/css/output.css}">
+</head>
+<body class="p-8 text-black bg-gray-100">
+    <h1 class="mb-6 text-3xl font-bold">Detalhes do Pedido</h1>
+
+    <!-- Informações do Pedido -->
+    <div class="p-6 mb-6 space-y-2 bg-white rounded shadow-md">
+        <p><strong>Número do Pedido:</strong> <span th:text="${pedido.numeroPedido}">123ABC</span></p>
+        <p><strong>Status:</strong> <span th:text="${pedido.status}">AGUARDANDO_PAGAMENTO</span></p>
+        <p><strong>Data:</strong> <span th:text="${#temporals.format(pedido.dataCriacao, 'dd/MM/yyyy HH:mm')}">01/01/2025</span></p>
+        <p><strong>Forma de Pagamento:</strong> <span th:text="${pedido.formaPagamento}">BOLETO</span></p>
+        <p><strong>Total:</strong> <span th:text="'R$ ' + ${pedido.valorTotal}">R$ 0,00</span></p>
+    </div>
+
+    <!-- Lista de Itens -->
+    <div class="p-6 bg-white rounded shadow-md">
+        <h2 class="mb-4 text-2xl font-semibold">Produtos</h2>
+        <table class="w-full border border-collapse border-gray-300 table-auto">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-4 py-2 text-left border">Produto</th>
+                    <th class="px-4 py-2 border">Quantidade</th>
+                    <th class="px-4 py-2 border">Preço Unitário</th>
+                    <th class="px-4 py-2 border">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${pedido.itens}">
+                    <td class="px-4 py-2 border" th:text="${item.produto.nomeProduto}">Produto Exemplo</td>
+                    <td class="px-4 py-2 text-center border" th:text="${item.quantidade}">1</td>
+                    <td class="px-4 py-2 text-center border" th:text="'R$ ' + ${item.produto.preco}">R$ 0,00</td>
+                    <td class="px-4 py-2 text-center border" th:text="'R$ ' + ${item.total}">R$ 0,00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Voltar -->
+    <a href="/pedidos" class="inline-block mt-4 text-blue-600 underline">← Voltar para lista</a>
+</body>
+</html>

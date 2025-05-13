@@ -1,0 +1,53 @@
+<!-- fragments/checkoutModal.html -->
+<div id="checkoutModal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+  <div class="relative w-[38rem] p-6 bg-white rounded-lg text-black">
+    <h3 class="mb-4 text-2xl font-bold">Finalizar Pedido</h3>
+
+    <!-- Endereço de entrega -->
+    <div class="mb-4">
+      <h4 class="font-semibold">Endereço de Entrega:</h4>
+      <select id="enderecoSelect" class="w-full px-3 py-2 mt-1 border rounded">
+        <option value="" disabled selected>Selecione um endereço</option>
+        <option th:each="end : ${enderecos}" th:value="${end.id}"
+                th:text="${end.logradouro + ', ' + end.numero + ' - ' + end.cidade}"></option>
+      </select>
+    </div>
+
+    <!-- Forma de pagamento -->
+    <div class="mb-4">
+      <h4 class="font-semibold">Forma de Pagamento:</h4>
+      <select id="pagamentoSelect" class="w-full px-3 py-2 mt-1 border rounded" onchange="mostrarCamposCartao(this.value)">
+        <option value="" disabled selected>Selecione uma forma de pagamento</option>
+        <option value="BOLETO">Boleto</option>
+        <option value="CARTAO">Cartão de Crédito</option>
+      </select>
+    </div>
+
+    <!-- Campos de cartão -->
+    <div id="cartaoCampos" class="hidden space-y-2">
+      <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Número do Cartão" id="numeroCartao">
+      <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Nome Completo" id="nomeCartao">
+      <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Código de Segurança" id="codigoSeguranca">
+      <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Validade (MM/AA)" id="dataValidade">
+      <input type="number" class="w-full px-3 py-2 border rounded" placeholder="Parcelas" id="parcelas">
+    </div>
+
+    <!-- Resumo -->
+    <div class="mt-4">
+      <h4 class="font-semibold">Resumo:</h4>
+      <p th:text="'Produtos: R$ ' + ${subtotal}">Produtos: R$ 0,00</p>
+      <p th:text="'Frete: R$ ' + ${frete}">Frete: R$ 0,00</p>
+      <p class="font-bold" th:text="'Total: R$ ' + ${total}">Total: R$ 0,00</p>
+    </div>
+
+    <!-- Botões -->
+    <div class="flex justify-between mt-6">
+      <button class="px-4 py-2 text-white bg-gray-500 rounded" onclick="fecharCheckoutModal()">Voltar</button>
+      <button class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700" onclick="confirmarPedido()">Confirmar Pedido</button>
+    </div>
+
+    <!-- Botão de fechar -->
+    <button class="absolute text-xl font-bold text-gray-500 top-2 right-2 hover:text-red-500"
+            onclick="fecharCheckoutModal()">&times;</button>
+  </div>
+</div>

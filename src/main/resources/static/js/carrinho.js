@@ -189,5 +189,36 @@ function atualizarTotalMenu(clienteId) {
     });
 }
 
+function abrirModalCheckout() {
+  fetch("/cliente/modal-checkout")
+    .then(response => response.text())
+    .then(html => {
+      const container = document.getElementById("modalCheckoutContainer");
+      container.innerHTML = html;
+
+      // Aguarda renderização do novo conteúdo
+      setTimeout(() => {
+        const modal = container.querySelector("#checkoutModal");
+        if (modal) {
+          modal.classList.remove("hidden");
+        } else {
+          console.error("Modal #checkoutModal não encontrado.");
+        }
+      }, 0);
+    })
+    .catch(err => {
+      alert("Erro ao carregar o modal de checkout.");
+      console.error(err);
+    });
+
+  document.getElementById("cartModal").classList.add("hidden");
+}
+
+function mostrarCamposCartao(formaPagamento) {
+    const campos = document.getElementById("cartaoCampos");
+    if (campos) {
+      campos.classList.toggle("hidden", formaPagamento !== "CARTAO");
+    }
+  }
 
 

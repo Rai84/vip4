@@ -1,9 +1,18 @@
 package com.pi.vip4.controller;
 
 import com.pi.vip4.model.Carrinho;
+import com.pi.vip4.model.Cliente;
+import com.pi.vip4.model.EnderecoEntrega;
 import com.pi.vip4.service.CarrinhoService;
+import com.pi.vip4.service.ClienteService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/carrinho")
@@ -11,6 +20,9 @@ public class CarrinhoController {
 
     @Autowired
     private CarrinhoService carrinhoService;
+
+    @Autowired
+    private ClienteService clienteService;
 
     @PostMapping("/adicionar")
     public Carrinho adicionarAoCarrinho(
@@ -42,5 +54,4 @@ public class CarrinhoController {
     public Double getTotalCarrinho(@RequestParam Long clienteId) {
         return carrinhoService.calcularTotalComFrete(clienteId);
     }
-
 }
