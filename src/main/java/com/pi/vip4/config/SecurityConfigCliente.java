@@ -31,7 +31,8 @@ public class SecurityConfigCliente {
                                                                 "/clientes/**", "/enderecos-entrega/**",
                                                                 "/modal-login-cliente", "/produtos/**",
                                                                 "/cliente/login-sucesso", // ✅ nova rota liberada
-                                                                "/css/**", "/js/**", "/images/**", "/error")
+                                                                "/css/**", "/js/**", "/images/**", "/error", "/cliente/new", 
+                                                                "/cliente/save")
                                                 .permitAll()
                                                 .requestMatchers("/cliente/**").hasRole("CLIENTE") // protege tudo de
                                                                                                    // cliente

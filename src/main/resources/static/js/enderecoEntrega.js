@@ -1,4 +1,37 @@
-// enderecoEntrega.js
+// Função que adiciona listener no campo CEP dentro do modal passado (modalElement)
+function bindCepAutoFill(modalElement) {
+  if (!modalElement) return;
+
+  const cepInput = modalElement.querySelector('#cep');
+  if (!cepInput) return;
+
+  cepInput.addEventListener('blur', function() {
+    const cep = this.value.replace(/\D/g, '');
+    if (cep.length !== 8) {
+      alert('CEP inválido! Deve conter 8 números.');
+      return;
+    }
+
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => {
+        if (!response.ok) throw new Error('Erro na consulta do CEP');
+        return response.json();
+      })
+      .then(data => {
+        if (data.erro) {
+          alert('CEP não encontrado.');
+          return;
+        }
+
+        modalElement.querySelector('#logradouro').value = data.logradouro || '';
+        modalElement.querySelector('#bairro').value = data.bairro || '';
+        modalElement.querySelector('#cidade').value = data.localidade || '';
+        modalElement.querySelector('#uf').value = data.uf || '';
+        modalElement.querySelector('#complemento').value = data.complemento || '';
+      })
+      .catch(() => alert('Não foi possível buscar o endereço pelo CEP.'));
+  });
+}
 
 // 🔵 Abre o modal de listagem de endereços via fetch
 function abrirModalEnderecoEntrega() {
@@ -45,12 +78,7 @@ function abrirModalFormEnderecoEntrega() {
       modal.classList.remove("hidden");
       console.log("✅ Modal de novo endereço exibido.");
 
-      const fechar = document.getElementById("fecharModalFormEnderecoEntrega");
-      if (fechar) {
-        fechar.addEventListener("click", () => {
-          modal.classList.add("hidden");
-        });
-      }
+      bindCepAutoFill(modal); // Ativa o CEP no modal carregado
     })
     .catch(err => console.error("❌ Erro ao carregar modal de novo endereço:", err));
 }
@@ -76,23 +104,26 @@ function abrirModalEdicaoEndereco(id) {
       novoModal.classList.remove("hidden");
       console.log("✅ Modal de edição carregado para ID:", id);
 
-      const fechar = document.getElementById("fecharModalFormEnderecoEntrega");
-      if (fechar) {
-        fechar.addEventListener("click", () => {
-          novoModal.classList.add("hidden");
-        });
-      }
+      bindCepAutoFill(novoModal); // Ativa o CEP no modal carregado
     })
     .catch(err => console.error("❌ Erro ao carregar modal de edição:", err));
 }
 
-// ❌ Fecha qualquer modal por ID
-function fecharModalById(id) {
-  const modal = document.getElementById(id);
+// Função única para fechar modais pelo id
+function fecharModal(idModal) {
+  const modal = document.getElementById(idModal);
   if (modal) {
-    modal.classList.add("hidden");
-    console.log(`❎ Modal ${id} fechado.`);
+    modal.classList.add('hidden');
+    console.log(`✅ Modal ${idModal} fechado.`);
   } else {
-    console.warn(`⚠️ Modal ${id} não encontrado para fechar.`);
+    console.log(`❌ Modal ${idModal} não encontrado.`);
   }
+}
+
+function fecharModalEnderecoEntrega() {
+  fecharModal('modalEnderecoEntrega');
+}
+
+function fecharModalFormEnderecoEntrega() {
+  fecharModal('modalFormEnderecoEntrega');
 }

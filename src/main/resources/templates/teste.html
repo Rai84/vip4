@@ -20,31 +20,6 @@
 
   <p><strong>ID:</strong> <span th:text="${id}"></span></p>
 
-
-  <!-- Conteúdo Principal -->
-  <!--<h1 class="mb-6 text-3xl font-semibold pt-36"></h1>
-   <div th:if="${userName != null}">
-  <h2 class="mb-2 text-xl font-bold">Bem-vindo, <span th:text="${userName}"></span>!</h2>
-  <p><strong>ID:</strong> <span th:text="${id}"></span></p>
-  <p><strong>Email:</strong> <span th:text="${email}"></span></p>
-  <p><strong>CPF:</strong> <span th:text="${cpf}"></span></p>
-  <p><strong>Telefone:</strong> <span th:text="${telefone}"></span></p>
-  <p><strong>Gênero:</strong> <span th:text="${genero}"></span></p>
-  <p><strong>Nascimento:</strong> <span th:text="${nascimento}"></span></p>
-
-  <div th:if="${enderecoFaturamento != null}">
-  <h3 class="mt-4 mb-2 text-lg font-semibold">Endereço de Faturamento</h3>
-  <p><strong>CEP:</strong> <span th:text="${enderecoFaturamento.cep}"></span></p>
-  <p><strong>Rua:</strong> <span th:text="${enderecoFaturamento.logradouro}"></span></p>
-  <p><strong>Número:</strong> <span th:text="${enderecoFaturamento.numero}"></span></p>
-  <p><strong>Complemento:</strong> <span th:text="${enderecoFaturamento.complemento} ?: '-'"></span></p>
-  <p><strong>Bairro:</strong> <span th:text="${enderecoFaturamento.bairro}"></span></p>
-  <p><strong>Cidade/UF:</strong>
-    <span th:text="${enderecoFaturamento.cidade}"></span> /
-    <span th:text="${enderecoFaturamento.uf}"></span>
-  </p>
-  </div> -->
-
 </div>
 
   <!-- Lista de produtos -->
@@ -101,10 +76,10 @@
 
 
   <!-- Modal do Carrinho -->
-  <div id="modalCarrinhoContainer"></div>
+  <!-- <div id="modalCarrinhoContainer"></div> -->
 
   <!-- Modal de Login -->
-  <div id="modalClienteContainer"></div>
+  <!-- <div id="modalClienteContainer"></div> -->
 
   <!-- Modal de listagem de endereços -->
   <div th:replace="~{fragments/modalEnderecoEntrega :: modalEnderecoEntrega}"></div>
@@ -118,15 +93,23 @@
   <!-- menup.html -->
   <div id="modalCheckoutContainer"></div>
 
+  <div id="modalContainer"></div>
+
+<!-- <button onclick="openModal('modal1')" class="p-2 text-white bg-blue-500 rounded">Abrir Modal 1</button>
+<button onclick="openModal('modal2')" class="p-2 text-white bg-blue-500 rounded">Abrir Modal 2</button>
+<button onclick="closeModal()" class="p-2 text-white bg-red-500 rounded">Fechar Modal</button> -->
+
+
+<script th:src="@{/js/modal.js}"></script>
 
 
   <!-- Script JS -->
   <script th:src="@{/js/carrinho.js}"></script>
-  <script th:src="@{/js/login.js}"></script>
-  <script th:src="@{/js/modalCliente.js}"></script>
   <script th:src="@{/js/teste.js}"></script>
   <script th:src="@{/js/enderecoEntrega.js}"></script>
   <script th:src="@{/js/confirmarPedido.js}"></script>
+  <script th:src="@{/js/cep.js}"></script>
+
 
 
 </body>

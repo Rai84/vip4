@@ -17,7 +17,7 @@
         </a>
     </div>
 
-    <form th:action="@{/clientes/save}" method="post" th:object="${cliente}" class="space-y-4" id="formulario">
+    <form th:action="@{/cliente/save}" method="post" th:object="${cliente}" class="space-y-4" id="formulario">
         <div>
             <label for="nome" class="block text-sm font-medium">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required
@@ -146,5 +146,43 @@
         </script>
     </form>
 </div>
+
+<script>
+    const cepInput = document.getElementById("cep");
+    const logradouroInput = document.getElementById("logradouro");
+    const bairroInput = document.getElementById("bairro");
+    const cidadeInput = document.getElementById("cidade");
+    const ufInput = document.getElementById("uf");
+
+    cepInput.addEventListener("blur", function () {
+        const cep = cepInput.value.replace(/\D/g, '');
+
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        logradouroInput.value = data.logradouro;
+                        bairroInput.value = data.bairro;
+                        cidadeInput.value = data.localidade;
+                        ufInput.value = data.uf;
+                    } else {
+                        alert("CEP não encontrado.");
+                        logradouroInput.value = '';
+                        bairroInput.value = '';
+                        cidadeInput.value = '';
+                        ufInput.value = '';
+                    }
+                })
+                .catch(() => {
+                    alert("Erro ao buscar o CEP.");
+                });
+        } else {
+            alert("CEP inválido. Deve conter 8 dígitos.");
+        }
+    });
+</script>
+
+
 </body>
 </html>

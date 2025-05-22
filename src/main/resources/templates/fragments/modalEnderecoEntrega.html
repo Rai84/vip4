@@ -1,4 +1,3 @@
-<!-- fragments/modalEnderecoEntrega.html -->
 <div id="modalEnderecoEntrega" th:fragment="modalEnderecoEntrega" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
   <div class="relative w-11/12 max-w-xl p-6 text-black bg-white rounded-lg shadow-lg">
     <button onclick="fecharModalEnderecoEntrega()" class="absolute text-2xl font-bold text-gray-500 top-2 right-2 hover:text-red-500">&times;</button>
@@ -10,7 +9,6 @@
         + Novo Endereço
     </button>
 
-
     <div class="space-y-4 overflow-y-auto max-h-96">
       <div th:each="endereco : ${enderecos}" class="p-4 bg-gray-100 border rounded">
         <p><strong>Endereço:</strong> <span th:text="${endereco.logradouro + ', ' + endereco.numero}"></span></p>
@@ -20,9 +18,6 @@
         <p><strong>Complemento:</strong> <span th:text="${endereco.complemento} ?: '---'"></span></p>
 
         <div class="flex gap-2 mt-3">
-            
-
-
           <a th:href="@{'/cliente/enderecos-entrega/delete/' + ${endereco.id}}" class="px-3 py-1 text-white bg-red-600 rounded hover:bg-red-700">Remover</a>
           <form th:action="@{'/cliente/enderecos-entrega/padrao/' + ${endereco.id}}" method="post">
             <button onclick="abrirModalEdicaoEndereco('[[${endereco.id}]]')"
@@ -36,5 +31,11 @@
         </div>
       </div>
     </div>
+
+    <button onclick="fecharModal('modalEnderecoEntrega')"
+            class="w-full py-2 mt-4 text-white bg-red-600 rounded hover:bg-red-700">
+      Fechar
+    </button>
+
   </div>
 </div>

@@ -1,0 +1,22 @@
+<!-- Overlay de fundo -->
+<div id="modalOverlay" class="fixed inset-0 z-40 bg-gray-800 bg-opacity-50"></div>
+
+<!-- Modal -->
+<div class="fixed z-50 p-6 bg-white rounded-lg shadow-lg w-[30rem] h-[41rem] top-4 right-4">
+    <div class="text-black p-6 rounded-lg relative w-[90%] max-w-md">
+        <!-- Título -->
+        <h2 class="mb-4 text-xl font-bold">Login do Cliente</h2>
+        <!-- Formulário -->
+        <form method="post" th:action="@{/login-cliente}" class="flex flex-col gap-3">
+            <input type="email" name="username" placeholder="Email" required class="p-2 border rounded" />
+            <input type="password" name="password" placeholder="Senha" required class="p-2 border rounded" />
+            <button type="submit" class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">Entrar</button>
+        </form>
+        <!-- Mensagens -->
+        <div th:if="${param.error}" class="mt-2 text-red-600">Email ou senha inválidos.</div>
+        <div th:if="${param.logout}" class="mt-2 text-green-600">Logout realizado com sucesso.</div>
+        <!-- Link de cadastro -->
+        <a th:href="@{/cliente/new}" class="block mt-4 text-blue-600 hover:underline">Cadastrar</a>
+    </div>
+    <button onclick="closeModal()" class="px-3 py-1 mt-4 text-white bg-red-500 rounded">Fechar</button>
+</div>

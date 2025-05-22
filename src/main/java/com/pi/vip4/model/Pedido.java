@@ -46,8 +46,9 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ItemPedido> itens;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String status = "AGUARDANDO_PAGAMENTO";
+    private StatusPedido status = StatusPedido.AGUARDANDO_PAGAMENTO;
 
     @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao = LocalDateTime.now();
@@ -61,6 +62,15 @@ public class Pedido {
     public enum FormaPagamento {
         BOLETO,
         CARTAO
+    }
+
+    public enum StatusPedido {
+        AGUARDANDO_PAGAMENTO,
+        PAGAMENTO_REJEITADO,
+        PAGAMENTO_COM_SUCESSO,
+        AGUARDANDO_RETIRADA,
+        EM_TRANSITO,
+        ENTREGUE
     }
 
     // Getters e Setters
@@ -96,6 +106,10 @@ public class Pedido {
     public String getNumeroCartao() {
         return numeroCartao;
     }
+
+    public void setStatus(StatusPedido status) {
+        this.status = status;
+    }    
 
     public void setNumeroCartao(String numeroCartao) {
         this.numeroCartao = numeroCartao;
@@ -142,7 +156,7 @@ public class Pedido {
     }
 
     public String getStatus() {
-        return status;
+        return status.name();
     }
 
     public LocalDateTime getDataCriacao() {

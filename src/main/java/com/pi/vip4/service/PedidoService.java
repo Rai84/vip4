@@ -1,6 +1,7 @@
 package com.pi.vip4.service;
 
 import com.pi.vip4.model.Pedido;
+import com.pi.vip4.model.Pedido.StatusPedido;
 import com.pi.vip4.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,17 +16,12 @@ public class PedidoService {
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private CarrinhoService carrinhoService; // ✅ injetando carrinhoService
+    private CarrinhoService carrinhoService;
 
     public Pedido salvar(Pedido pedido) {
-        // Geração do número sequencial do pedido
         pedido.setNumeroPedido(UUID.randomUUID().toString().substring(0, 8).toUpperCase());
-
         Pedido pedidoSalvo = pedidoRepository.save(pedido);
-
-        // ✅ limpar o carrinho do cliente após salvar o pedido
         carrinhoService.limparCarrinhoPorCliente(pedido.getCliente().getId());
-
         return pedidoSalvo;
     }
 
@@ -41,4 +37,15 @@ public class PedidoService {
         return pedidoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado: " + id));
     }
+
+    // ✅ Novo método: alterar status
+    public void alterarStatus(Long pedidoId, String novoStatus) {
+        Pedido pedido = buscarPorId(pedidoId);
+        pedido.setStatus(StatusPedido.valueOf(novoStatus));
+        pedidoRepository.save(pedido);
+    }
+ 
+
+    
+    
 }

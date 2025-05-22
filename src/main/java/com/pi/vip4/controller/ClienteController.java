@@ -14,11 +14,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.Authentication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/cliente")
 @Validated
 public class ClienteController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClienteController.class);
 
     @Autowired
     private ClienteService clienteService;
@@ -49,7 +55,16 @@ public class ClienteController {
 
     @PostMapping("/save")
     public String createCliente(@Valid @ModelAttribute Cliente cliente) {
-        clienteService.salvarNovoCliente(cliente);
+        logger.info("Tentando criar cliente: {}", cliente);
+
+        try {
+            clienteService.salvarNovoCliente(cliente);
+            logger.info("Cliente criado com sucesso: {}", cliente);
+        } catch (Exception e) {
+            logger.error("Erro ao criar cliente: {}", e.getMessage(), e);
+            throw e; // Opcional: para propagar o erro
+        }
+
         return "redirect:/login-cliente";
     }
 
