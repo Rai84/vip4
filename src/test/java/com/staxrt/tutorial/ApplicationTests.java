@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.pi.vip4.Application;
-import com.pi.vip4.model.User;
-import com.pi.vip4.model.User.Tipo;
+import com.pi.vip4.model.Usuario;
+import com.pi.vip4.model.Usuario.Tipo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -44,7 +44,7 @@ public class ApplicationTests {
 
 	@Test
 	public void testGetUserById() {
-		User user = restTemplate.getForObject(getRootUrl() + "/users/1", User.class);
+		Usuario user = restTemplate.getForObject(getRootUrl() + "/users/1", Usuario.class);
 		System.out.println(user.getNome());
 		Assert.assertNotNull(user);
 	}
@@ -52,15 +52,15 @@ public class ApplicationTests {
 	@Test
 	public void testCreateUser() {
     // Criação de um novo usuário
-    User user = new User();
+    Usuario user = new Usuario();
     user.setEmail("admin@gmail.com");
     user.setNome("admin");
     user.setCpf("11111111111"); // CPF com 11 dígitos
-    user.setTipo(User.Tipo.ADMIN); // Usando o enum diretamente
+    user.setTipo(Usuario.Tipo.ADMIN); // Usando o enum diretamente
     user.setStatus(true); // Status ativo
 
     // Envia a requisição POST para o endpoint '/users/save'
-    ResponseEntity<User> postResponse = restTemplate.postForEntity(getRootUrl() + "/users/save", user, User.class);
+    ResponseEntity<Usuario> postResponse = restTemplate.postForEntity(getRootUrl() + "/users/save", user, Usuario.class);
 
     // Verifica se a resposta não é nula
     Assert.assertNotNull(postResponse);
@@ -74,14 +74,14 @@ public class ApplicationTests {
 	@Test
 	public void testUpdateUser() {
 		int id = 1;
-		User user = restTemplate.getForObject(getRootUrl() + "/users/" + id, User.class);
+		Usuario user = restTemplate.getForObject(getRootUrl() + "/users/" + id, Usuario.class);
 		user.setNome("admin1");
 		user.setTipo(Tipo.ESTOQUISTA); // Atualizando tipo com o enum Tipo.ESTOQUISTA
 		user.setStatus(false); // Atualizando status para inativo
 
 		restTemplate.put(getRootUrl() + "/users/" + id, user);
 
-		User updatedUser = restTemplate.getForObject(getRootUrl() + "/users/" + id, User.class);
+		Usuario updatedUser = restTemplate.getForObject(getRootUrl() + "/users/" + id, Usuario.class);
 		Assert.assertNotNull(updatedUser);
 		Assert.assertEquals("admin1", updatedUser.getNome());
 		Assert.assertEquals(Tipo.ESTOQUISTA, updatedUser.getTipo()); // Verificando tipo com enum
@@ -91,13 +91,13 @@ public class ApplicationTests {
 	@Test
 	public void testDeleteUser() {
 		int id = 2;
-		User user = restTemplate.getForObject(getRootUrl() + "/users/" + id, User.class);
+		Usuario user = restTemplate.getForObject(getRootUrl() + "/users/" + id, Usuario.class);
 		Assert.assertNotNull(user);
 
 		restTemplate.delete(getRootUrl() + "/users/" + id);
 
 		try {
-			user = restTemplate.getForObject(getRootUrl() + "/users/" + id, User.class);
+			user = restTemplate.getForObject(getRootUrl() + "/users/" + id, Usuario.class);
 		} catch (final HttpClientErrorException e) {
 			Assert.assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
 		}

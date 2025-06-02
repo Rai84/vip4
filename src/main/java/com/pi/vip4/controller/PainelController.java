@@ -1,6 +1,5 @@
 package com.pi.vip4.controller;
 
-import com.pi.vip4.model.User;
 import com.pi.vip4.service.PainelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

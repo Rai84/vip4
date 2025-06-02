@@ -1,4 +1,4 @@
-package com.pi.vip4.service.details;
+package com.pi.vip4.service.details.cliente;
 
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoEntrega;

@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
-public class User {
+public class Usuario {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -133,7 +133,7 @@ public class User {
         '}';
   }
 
-  public User orElseThrow(Object object) {
+  public Usuario orElseThrow(Object object) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
   }

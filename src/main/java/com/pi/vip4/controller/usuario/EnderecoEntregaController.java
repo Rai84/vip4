@@ -1,4 +1,4 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.usuario;
 
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoEntrega;

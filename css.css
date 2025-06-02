@@ -1,0 +1,113 @@
+/* Vermelho com 14 tons */
+.vermelho-100 { background-color: #ffe5e5; }
+.vermelho-200 { background-color: #ffb3b3; }
+.vermelho-300 { background-color: #ff8080; }
+.vermelho-400 { background-color: #ff4d4d; }
+.vermelho-500 { background-color: #ff1a1a; }
+.vermelho-600 { background-color: #e60000; }
+.vermelho-700 { background-color: #cc0000; }
+.vermelho-800 { background-color: #b30000; }
+.vermelho-900 { background-color: #990000; }
+.vermelho-1000 { background-color: #800000; }
+.vermelho-1100 { background-color: #660000; }
+.vermelho-1200 { background-color: #4d0000; } /* Ajustado para não ficar preto */
+.vermelho-1300 { background-color: #330000; }
+.vermelho-1400 { background-color: #560101; }
+
+/* Laranja */
+.laranja-100 { background-color: #fff2e0; }
+.laranja-200 { background-color: #ffd9b3; }
+.laranja-300 { background-color: #ffc180; }
+.laranja-400 { background-color: #ffa94d; }
+.laranja-500 { background-color: #ff9100; }
+.laranja-600 { background-color: #e67e00; }
+.laranja-700 { background-color: #cc6b00; }
+.laranja-800 { background-color: #b35800; }
+.laranja-900 { background-color: #994500; }
+.laranja-1000 { background-color: #803300; }
+.laranja-1100 { background-color: #662200; }
+.laranja-1200 { background-color: #4d1100; }
+
+/* Amarelo */
+.amarelo-100 { background-color: #fffde0; }
+.amarelo-200 { background-color: #fffab3; }
+.amarelo-300 { background-color: #fff780; }
+.amarelo-400 { background-color: #fff44d; }
+.amarelo-500 { background-color: #fff100; }
+.amarelo-600 { background-color: #e6d900; }
+.amarelo-700 { background-color: #ccc200; }
+.amarelo-800 { background-color: #b3aa00; }
+.amarelo-900 { background-color: #999200; }
+.amarelo-1000 { background-color: #807b00; }
+.amarelo-1100 { background-color: #666300; }
+.amarelo-1200 { background-color: #4d4b00; }
+
+/* Verde */
+.verde-100 { background-color: #e0f5e9; }
+.verde-200 { background-color: #b3e6c8; }
+.verde-300 { background-color: #80d6a8; }
+.verde-400 { background-color: #4dc788; }
+.verde-500 { background-color: #1ab869; }
+.verde-600 { background-color: #009e4f; }
+.verde-700 { background-color: #008245; }
+.verde-800 { background-color: #00663a; }
+.verde-900 { background-color: #004930; }
+.verde-1000 { background-color: #003d29; }
+.verde-1100 { background-color: #002f21; }
+.verde-1200 { background-color: #001f16; }
+
+/* Azul Claro */
+.azul-claro-100 { background-color: #e0f7ff; }
+.azul-claro-200 { background-color: #b3eaff; }
+.azul-claro-300 { background-color: #80dcff; }
+.azul-claro-400 { background-color: #4dcfff; }
+.azul-claro-500 { background-color: #1ac2ff; }
+.azul-claro-600 { background-color: #00a8e6; }
+.azul-claro-700 { background-color: #008fc2; }
+.azul-claro-800 { background-color: #00759e; }
+.azul-claro-900 { background-color: #005c7a; }
+.azul-claro-1000 { background-color: #00425c; }
+.azul-claro-1100 { background-color: #002e40; }
+.azul-claro-1200 { background-color: #001a24; }
+
+/* Azul Escuro */
+.azul-escuro-100 { background-color: #e0e7ff; }
+.azul-escuro-200 { background-color: #b3c2ff; }
+.azul-escuro-300 { background-color: #809dff; }
+.azul-escuro-400 { background-color: #4d78ff; }
+.azul-escuro-500 { background-color: #1a54ff; }
+.azul-escuro-600 { background-color: #003be6; }
+.azul-escuro-700 { background-color: #002fba; }
+.azul-escuro-800 { background-color: #00238f; }
+.azul-escuro-900 { background-color: #001764; }
+.azul-escuro-1000 { background-color: #000c3a; }
+.azul-escuro-1100 { background-color: #00081f; }
+.azul-escuro-1200 { background-color: #00040f; }
+
+/* Roxo */
+.roxo-100 { background-color: #f2e0ff; }
+.roxo-200 { background-color: #d9b3ff; }
+.roxo-300 { background-color: #c080ff; }
+.roxo-400 { background-color: #a64dff; }
+.roxo-500 { background-color: #8c1aff; }
+.roxo-600 { background-color: #7300e6; }
+.roxo-700 { background-color: #5c00b3; }
+.roxo-800 { background-color: #460080; }
+.roxo-900 { background-color: #330066; }
+.roxo-1000 { background-color: #22004d; }
+.roxo-1100 { background-color: #110033; }
+.roxo-1200 { background-color: #08001a; }
+
+/* Rosa */
+.rosa-100 { background-color: #ffe0f0; }
+.rosa-200 { background-color: #ffb3d6; }
+.rosa-300 { background-color: #ff80bb; }
+.rosa-400 { background-color: #ff4da1; }
+.rosa-500 { background-color: #ff1a87; }
+.rosa-600 { background-color: #e6006e; }
+.rosa-700 { background-color: #b30056; }
+.rosa-800 { background-color: #80003d; }
+.rosa-900 { background-color: #660030; }
+.rosa-1000 { background-color: #4d0023; }
+.rosa-1100 { background-color: #330016; }
+.rosa-1200 { background-color: #1a000b; }

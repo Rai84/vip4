@@ -1,4 +1,4 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.pedido;
 
 import com.pi.vip4.model.Carrinho;
 import com.pi.vip4.model.Cliente;
@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -1,4 +1,4 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.carrinho;
 
 import com.pi.vip4.model.Carrinho;
 import com.pi.vip4.model.Cliente;

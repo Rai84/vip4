@@ -1,7 +1,7 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.usuario;
 
-import com.pi.vip4.model.User;
-import com.pi.vip4.service.UserService;
+import com.pi.vip4.model.Usuario;
+import com.pi.vip4.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
-public class UserController {
+public class UsuarioController {
 
   @Autowired
-  private UserService userService;
+  private UsuarioService userService;
 
   @GetMapping
   public String getAllUsers(Model model, @RequestParam(defaultValue = "0") int page) {
-    Page<User> usersPage = userService.listarUsuarios(PageRequest.of(page, 10));
+    Page<Usuario> usersPage = userService.listarUsuarios(PageRequest.of(page, 10));
     model.addAttribute("users", usersPage.getContent());
     model.addAttribute("usersPage", usersPage);
     return "list-user";
@@ -27,12 +27,12 @@ public class UserController {
 
   @GetMapping("/new")
   public String showCreateUserForm(Model model) {
-    model.addAttribute("user", new User());
+    model.addAttribute("user", new Usuario());
     return "create-user-form";
   }
 
   @PostMapping("/save")
-  public String createUser(@Valid @ModelAttribute User user) {
+  public String createUser(@Valid @ModelAttribute Usuario user) {
     userService.salvarNovoUsuario(user);
     return "redirect:/users";
   }
@@ -44,7 +44,7 @@ public class UserController {
   }
 
   @PostMapping("/update/{id}")
-  public String updateUser(@PathVariable("id") Long userId, @Valid @ModelAttribute User userDetails) throws Exception {
+  public String updateUser(@PathVariable("id") Long userId, @Valid @ModelAttribute Usuario userDetails) throws Exception {
     userService.atualizarUsuario(userId, userDetails);
     return "redirect:/users";
   }

@@ -10,13 +10,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.pi.vip4.service.details.CustomUserDetailsService;
+import com.pi.vip4.service.details.usuario.CustomUsuarioDetailsService;
 
 import java.util.List;
 
 @Configuration
 @Order(2)
-public class SecurityConfig {
+public class SecurityConfigUsuario {
 
         @Bean
         public SecurityFilterChain userSecurityFilterChain(HttpSecurity http,
@@ -55,7 +55,7 @@ public class SecurityConfig {
         }
 
         @Bean
-        public DaoAuthenticationProvider userAuthenticationProvider(CustomUserDetailsService userService,
+        public DaoAuthenticationProvider userAuthenticationProvider(CustomUsuarioDetailsService userService,
                         PasswordEncoder encoder) {
                 DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
                 provider.setUserDetailsService(userService);

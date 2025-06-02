@@ -1,9 +1,9 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.cliente;
 
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoFaturamento;
 import com.pi.vip4.service.ClienteService;
-import com.pi.vip4.service.details.CustomClienteDetails;
+import com.pi.vip4.service.details.cliente.CustomClienteDetails;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

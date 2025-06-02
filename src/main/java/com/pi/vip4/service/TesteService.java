@@ -4,8 +4,9 @@ import com.pi.vip4.model.EnderecoEntrega;
 import com.pi.vip4.model.EnderecoFaturamento;
 import com.pi.vip4.model.Produto;
 import com.pi.vip4.repository.ProdutoRepository;
-import com.pi.vip4.service.details.CustomClienteDetails;
-import com.pi.vip4.service.details.CustomClienteDetailsService;
+import com.pi.vip4.service.details.cliente.CustomClienteDetails;
+import com.pi.vip4.service.details.cliente.CustomClienteDetailsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

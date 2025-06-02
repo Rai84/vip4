@@ -1,4 +1,4 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.cliente;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

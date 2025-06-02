@@ -1,7 +1,8 @@
 package com.pi.vip4.service;
 
-import com.pi.vip4.service.details.CustomUserDetails;
-import com.pi.vip4.service.details.CustomUserDetailsService;
+import com.pi.vip4.service.details.usuario.CustomUsuarioDetails;
+import com.pi.vip4.service.details.usuario.CustomUsuarioDetailsService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ public class PainelService {
     private static final Logger logger = LoggerFactory.getLogger(PainelService.class);
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUsuarioDetailsService customUserDetailsService;
 
     public void carregarDadosDoPainel(Authentication authentication, Model model) {
         logger.info("PainelService: carregando dados para o painel...");
@@ -24,7 +25,7 @@ public class PainelService {
         String email = authentication.getName();
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
-        if (userDetails instanceof CustomUserDetails customUser) {
+        if (userDetails instanceof CustomUsuarioDetails customUser) {
             logger.info("Usuário autenticado: ID = {}, Email = {}", customUser.getId(), customUser.getEmail());
 
             model.addAttribute("userId", customUser.getId());

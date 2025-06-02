@@ -1,16 +1,16 @@
-package com.pi.vip4.service.details;
+package com.pi.vip4.service.details.usuario;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.pi.vip4.model.User;
-import com.pi.vip4.model.User.Tipo;
+import com.pi.vip4.model.Usuario;
+import com.pi.vip4.model.Usuario.Tipo;
 
 import java.util.Collection;
 import java.util.List;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUsuarioDetails implements UserDetails {
 
     private Long id;
     private String username;
@@ -19,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     private Tipo tipo;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(User user) {
+    public CustomUsuarioDetails(Usuario user) {
         this.id = user.getId();
         this.username = user.getEmail(); // E-mail como username
         this.password = user.getSenha();

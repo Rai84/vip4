@@ -1,10 +1,11 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.cliente;
 
 import com.pi.vip4.model.Cliente;
 import com.pi.vip4.model.EnderecoEntrega;
 import com.pi.vip4.service.ClienteService;
 import com.pi.vip4.service.EnderecoEntregaService;
-import com.pi.vip4.service.details.CustomClienteDetails;
+import com.pi.vip4.service.details.cliente.CustomClienteDetails;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

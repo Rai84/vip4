@@ -1,4 +1,4 @@
-package com.pi.vip4.controller;
+package com.pi.vip4.controller.produto;
 
 import com.pi.vip4.model.ImgProduto;
 import com.pi.vip4.model.Produto;
@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
-import java.util.List;
 
 @Controller
 @RequestMapping("/produtos")
