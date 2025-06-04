@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @Order(2)
-public class SecurityConfigUsuario {
+public class SecurityConfig {
 
         @Bean
         public SecurityFilterChain userSecurityFilterChain(HttpSecurity http,
