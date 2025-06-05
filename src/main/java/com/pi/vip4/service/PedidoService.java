@@ -34,9 +34,9 @@ public class PedidoService {
     }
 
     public Pedido buscarPorId(Long id) {
-        return pedidoRepository.findById(id)
+        return pedidoRepository.findByIdComEndereco(id)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado: " + id));
-    }
+    }    
 
     // ✅ Novo método: alterar status
     public void alterarStatus(Long pedidoId, String novoStatus) {

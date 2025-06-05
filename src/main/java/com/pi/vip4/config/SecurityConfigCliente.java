@@ -31,7 +31,7 @@ public class SecurityConfigCliente {
                                                                 "/", "/login-cliente", "/logout-cliente",
                                                                 "/clientes/**", "/enderecos-entrega/**",
                                                                 "/modal-login-cliente", "/produtos/**",
-                                                                "/cliente/login-sucesso", // ✅ nova rota liberada
+                                                                "/cliente/login-sucesso", "/cliente/modal-checkout", // ✅ nova rota liberada
                                                                 "/css/**", "/js/**", "/images/**", "/error", "/cliente/new", 
                                                                 "/cliente/save")
                                                 .permitAll()

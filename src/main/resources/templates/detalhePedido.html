@@ -16,6 +16,21 @@
         <p><strong>Data:</strong> <span th:text="${#temporals.format(pedido.dataCriacao, 'dd/MM/yyyy HH:mm')}">01/01/2025</span></p>
         <p><strong>Forma de Pagamento:</strong> <span th:text="${pedido.formaPagamento}">BOLETO</span></p>
         <p><strong>Total:</strong> <span th:text="'R$ ' + ${pedido.valorTotal}">R$ 0,00</span></p>
+
+        <div th:if="${pedido.enderecoEntrega  != null}">
+            <h2 class="mt-4 mb-2 text-xl font-semibold">Endereço de Entrega</h2>
+            <p><strong>Rua:</strong> <span th:text="${pedido.enderecoEntrega.logradouro}"></span></p>
+            <p><strong>Número:</strong> <span th:text="${pedido.enderecoEntrega.numero}"></span></p>
+            <p><strong>Bairro:</strong> <span th:text="${pedido.enderecoEntrega.bairro}"></span></p>
+            <p><strong>Cidade:</strong> <span th:text="${pedido.enderecoEntrega.cidade}"></span></p>
+            <p><strong>Estado:</strong> <span th:text="${pedido.enderecoEntrega.uf}"></span></p>
+            <p><strong>CEP:</strong> <span th:text="${pedido.enderecoEntrega.cep}"></span></p>
+            <!-- outros campos -->
+        </div>
+        <div th:unless="${pedido.enderecoEntrega != null}">
+            <p>Endereço de entrega não informado.</p>
+        </div>
+
     </div>
 
     <!-- Lista de Itens -->

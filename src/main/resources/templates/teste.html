@@ -20,68 +20,53 @@
 
   <p><strong>ID:</strong> <span th:text="${id}"></span></p>
 
-</div>
-
   <!-- Lista de produtos -->
   <div class="px-8 pt-28">
-  <h1 class="mb-6 text-3xl font-semibold">Teste - Produtos</h1>
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <h1 class="mb-6 text-3xl font-semibold">Teste - Produtos</h1>
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
-    <!-- Mostra apenas produtos com estoque > 0 e status = true -->
-    <div th:each="produto : ${produtos}" 
-         th:if="${produto.estoque > 0 and produto.status}" 
-         class="p-4 text-black bg-white rounded-lg shadow">
+      <!-- Mostra apenas produtos com estoque > 0 e status = true -->
+      <div th:each="produto : ${produtos}" 
+           th:if="${produto.estoque > 0 and produto.status}" 
+           class="p-4 text-black bg-white rounded-lg shadow">
 
-      <img th:if="${!produto.getImgUrls().isEmpty()}"
-     th:src="@{${produto.getImgUrls()[0]}}"
-     alt="Imagem do Produto"
-     class="object-cover w-full mb-3 rounded h-72" />
+        <img th:if="${!produto.getImgUrls().isEmpty()}"
+             th:src="@{${produto.getImgUrls()[0]}}"
+             alt="Imagem do Produto"
+             class="object-cover w-full mb-3 rounded h-72" />
 
-    <!-- Imagem padrão caso não tenha imagem -->
-    <img th:if="${produto.getImgUrls().isEmpty()}"
-     th:src="@{/images/placeholder.png}"
-     alt="Sem imagem"
-     class="object-cover w-full mb-3 rounded h-72" />
+        <!-- Imagem padrão caso não tenha imagem -->
+        <img th:if="${produto.getImgUrls().isEmpty()}"
+             th:src="@{/images/placeholder.png}"
+             alt="Sem imagem"
+             class="object-cover w-full mb-3 rounded h-72" />
 
-      <h2 class="text-lg font-medium text-gray-700" th:text="${produto.nomeProduto}">Nome</h2>
-      <p class="text-gray-600" th:text="${produto.descricao}">Descrição</p>
-      <p class="text-black text-[20px] pt-2 font-medium" th:text="'R$ ' + ${produto.preco}">Preço</p>
-      
-
-      <button
-      class="relative flex items-center justify-center w-10 h-10 px-4 py-2 -mt-12 text-white bg-blue-600 rounded-full hover:bg-blue-700 bottom-28 left-64"
-      th:data-nome="${produto.nomeProduto}"
-      th:data-estoque="${produto.descricao}"
-      th:data-preco="${produto.preco}"
-      th:data-imagem="${produto.getImgUrls()[0]}"
-      th:data-id="${produto.id}"
-      th:onclick="${userName == null} ? 'abrirModalLogin()' : 'enviarProdutoParaCarrinho(this)'">
-      <i class="bi bi-plus-lg"></i>
-      </button>
-
+        <h2 class="text-lg font-medium text-gray-700" th:text="${produto.nomeProduto}">Nome</h2>
+        <p class="text-gray-600" th:text="${produto.descricao}">Descrição</p>
+        <p class="text-black text-[20px] pt-2 font-medium" th:text="'R$ ' + ${produto.preco}">Preço</p>
+        
+        <button
+          class="relative flex items-center justify-center w-10 h-10 px-4 py-2 -mt-12 text-white bg-blue-600 rounded-full hover:bg-blue-700 bottom-28 left-64"
+          th:data-nome="${produto.nomeProduto}"
+          th:data-estoque="${produto.descricao}"
+          th:data-preco="${produto.preco}"
+          th:data-imagem="${produto.getImgUrls()[0]}"
+          th:data-id="${produto.id}"
+          th:onclick="enviarProdutoParaCarrinho(this)">
+          <i class="bi bi-plus-lg"></i>
+        </button>
 
 
-      <a th:href="@{'/produtos/' + ${produto.id}}"
-         class="block px-4 py-2 mt-3 text-center text-white bg-blue-600 rounded hover:bg-blue-700">
-        Ver detalhes
-      </a>
-    </div>
+        <a th:href="@{'/produtos/' + ${produto.id}}"
+           class="block px-4 py-2 mt-3 text-center text-white bg-blue-600 rounded hover:bg-blue-700">
+          Ver detalhes
+        </a>
+      </div>
     
+    </div>
   </div>
-</div>
-
-
-
-  
-
 
   <!-- Modal do Carrinho -->
-  <!-- <div id="modalCarrinhoContainer"></div> -->
-
-  <!-- Modal de Login -->
-  <!-- <div id="modalClienteContainer"></div> -->
-
-  <!-- Modal de listagem de endereços -->
   <div th:replace="~{fragments/modalEnderecoEntrega :: modalEnderecoEntrega}"></div>
   
   <!-- Modal de formulário (adicionar/editar) -->
@@ -95,15 +80,8 @@
 
   <div id="modalContainer"></div>
 
-<!-- <button onclick="openModal('modal1')" class="p-2 text-white bg-blue-500 rounded">Abrir Modal 1</button>
-<button onclick="openModal('modal2')" class="p-2 text-white bg-blue-500 rounded">Abrir Modal 2</button>
-<button onclick="closeModal()" class="p-2 text-white bg-red-500 rounded">Fechar Modal</button> -->
-
-
-<script th:src="@{/js/modal.js}"></script>
-
-
-  <!-- Script JS -->
+  <!-- Scripts JS -->
+  <script th:src="@{/js/modal.js}"></script>
   <script th:src="@{/js/carrinho.js}"></script>
   <script th:src="@{/js/teste.js}"></script>
   <script th:src="@{/js/enderecoEntrega.js}"></script>
@@ -111,10 +89,5 @@
   <script th:src="@{/js/cep.js}"></script>
   <script th:src="@{/js/aaa.js}"></script>
 
-
-
 </body>
 </html>
-
-
-

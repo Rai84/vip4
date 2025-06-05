@@ -6,13 +6,16 @@ import com.pi.vip4.model.Carrinho;
 import com.pi.vip4.repository.ClienteRepository;
 import com.pi.vip4.service.CarrinhoService;
 import com.pi.vip4.service.TesteService;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -80,39 +83,39 @@ public class SiteController {
 
         return "fragments/modal2";
     }
-    
-    @GetMapping("/modal/modal3") // Modal do carrinho
-    public String mostrarModalCarrinho(Model model, Authentication authentication) {
-        try {
-            if (authentication == null) {
-                throw new RuntimeException("Usuário não autenticado");
+
+    @GetMapping("/modal/modal3")
+    public String mostrarModalCarrinho(Model model, Authentication authentication, HttpSession session) {
+        Long clienteId = (Long) session.getAttribute("clienteId");
+
+        if (clienteId == null) {
+            System.out.println("Usuário não autenticado. Carrinho vazio.");
+            // Recupera o carrinho temporário da sessão
+            List<Carrinho> itensTemp = (List<Carrinho>) session.getAttribute("carrinhoTemp");
+            if (itensTemp == null) {
+                itensTemp = new ArrayList<>();
             }
-
-            String email = authentication.getName();
-            Cliente cliente = clienteRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-
-            List<Carrinho> itens = carrinhoService.getItensPorCliente(cliente.getId());
-
-            double subtotal = itens.stream()
-                    .mapToDouble(c -> c.getTotal().doubleValue())
-                    .sum();
-
-            double frete = itens.stream()
-                    .findFirst()
-                    .map(c -> c.getFrete() != null ? c.getFrete() : 0.0)
-                    .orElse(0.0);
-
-            double total = subtotal + frete;
-
-            model.addAttribute("itens", itens);
-            model.addAttribute("total", total);
-            model.addAttribute("frete", frete);
-
-            return "fragments/modal3";
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            model.addAttribute("itens", itensTemp); // Carrinho temporário
+            model.addAttribute("total", 0.0); // Total igual a 0 para não logado
+            model.addAttribute("frete", 0.0); // Frete igual a 0 para não logado
+            return "fragments/modal3"; // Exibe carrinho vazio ou temporário
         }
+
+        // Caso o cliente esteja logado, carregar os itens do carrinho do cliente
+        String email = authentication.getName();
+        Cliente cliente = clienteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+
+        List<Carrinho> itens = carrinhoService.getItensPorCliente(cliente.getId());
+        double subtotal = itens.stream().mapToDouble(c -> c.getTotal().doubleValue()).sum();
+        double frete = itens.stream().findFirst().map(c -> c.getFrete() != null ? c.getFrete() : 0.0).orElse(0.0);
+        double total = subtotal + frete;
+
+        model.addAttribute("itens", itens); // Carrinho do cliente logado
+        model.addAttribute("total", total);
+        model.addAttribute("frete", frete);
+
+        return "fragments/modal3"; // Exibe carrinho do cliente logado
     }
+
 }

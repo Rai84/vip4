@@ -31,6 +31,12 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
+    public Cliente autenticar(String email, String senha) {
+        return clienteRepository.findByEmail(email)
+                .filter(cliente -> passwordEncoder.matches(senha, cliente.getSenha()))
+                .orElse(null);
+    }    
+
     public Cliente buscarClientePorId(Long id) throws Exception {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new Exception("Cliente não encontrado: " + id));
