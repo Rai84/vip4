@@ -26,6 +26,9 @@ public class CarrinhoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     public Carrinho adicionarAoCarrinho(Long clienteId, Long produtoId, int quantidade) {
         Cliente cliente = clienteRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
@@ -127,4 +130,15 @@ public class CarrinhoService {
         carrinhoRepository.deleteByClienteId(clienteId);
     }
 
+    public void salvarCarrinhoParaCliente(Long clienteId, List<Carrinho> carrinhoTemp) {
+        for (Carrinho item : carrinhoTemp) {
+            try {
+                item.setCliente(clienteService.buscarClientePorId(clienteId)); // Atribui o cliente
+            } catch (Exception e) {
+                throw new RuntimeException("Erro ao buscar cliente por ID: " + clienteId, e);
+            }
+            carrinhoRepository.save(item); // Salva o item no banco de dados
+        }
+    }
+    
 }

@@ -152,20 +152,20 @@ function abrirModalCheckout() {
       const container = document.getElementById("modalCheckoutContainer");
       container.innerHTML = html;
 
-      setTimeout(() => {
-        const modal = container.querySelector("#checkoutModal");
-        if (modal) {
-          modal.classList.remove("hidden");
-          modal.classList.add("flex");
-        } else {
-          console.error("Modal #checkoutModal não encontrado.");
-        }
-      }, 0);
+      // Aguardar o conteúdo ser completamente carregado e o modal ser inserido
+      const modal = container.querySelector("#checkoutModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      } else {
+        console.error("Modal #checkoutModal não encontrado.");
+      }
     })
     .catch((err) => {
       alert("Erro ao carregar o modal de checkout.");
       console.error(err);
     });
+
 }
 
 // Função para selecionar frete e atualizar o valor
